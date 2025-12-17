@@ -1,0 +1,2291 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 DearGift - Giáng Sinh Yêu Thương</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #c41e3a, #ff6b6b);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #ff6b6b, #c41e3a);
+        }
+
+        ::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+
+        /* Scrollbar cho Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #c41e3a rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a472a, #2a623d, #5d9b6c);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 1s ease;
+            position: relative;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Snowflakes animation */
+        .snowflake {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.8;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+            border: 3px solid #c41e3a;
+            transition: all 0.5s ease;
+        }
+
+        .container-border {
+            border-width: 3px;
+            border-style: solid;
+            border-color: #c41e3a;
+            transition: all 0.5s ease;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            min-height: 300px;
+            overflow-y: auto;
+            max-height: 70vh;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2 {
+            color: #c41e3a;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            transition: color 0.3s ease;
+        }
+
+        h1 {
+            font-size: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        h2 {
+            font-size: 28px;
+        }
+
+        .message-box {
+            background: linear-gradient(135deg, #fff5f7, #ffe8ec);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px dashed #ff8ab5;
+            text-align: center;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="%23c41e3a" fill-opacity="0.1" d="M10,0 L12,6 L18,6 L13,10 L15,16 L10,12 L5,16 L7,10 L2,6 L8,6 Z"/></svg>');
+            transition: all 0.5s ease;
+        }
+
+        .simple-message {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border-left: 5px solid #c41e3a;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .simple-message:before {
+            content: "🎄";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 40px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .highlight-text {
+            font-size: 20px;
+            color: #c41e3a;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        button {
+            background: linear-gradient(135deg, #c41e3a, #e63946);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:before {
+            content: ❄️";
+            position: absolute;
+            left: 10px;
+            opacity: 0.3;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(196, 30, 58, 0.3);
+        }
+
+        .response-btn {
+            background: white;
+            color: #333;
+            border: 2px solid #e0e0e0;
+            margin: 8px 0;
+        }
+
+        .response-btn.yes:hover {
+            background: #2a9d8f;
+            color: white;
+            border-color: #2a9d8f;
+        }
+
+        .response-btn.no:hover {
+            background: #e63946;
+            color: white;
+            border-color: #e63946;
+        }
+
+        .response-btn.maybe:hover {
+            background: #ffb703;
+            color: #333;
+            border-color: #ffb703;
+        }
+
+        textarea, input, select {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: inherit;
+            margin: 12px 0;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        textarea:focus, input:focus, select:focus {
+            outline: none;
+            border-color: #c41e3a;
+            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+            min-height: 100px;
+            max-height: 200px;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .progress-bar:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            right: 30px;
+            height: 4px;
+            background: #e0e0e0;
+            z-index: 1;
+        }
+
+        .step {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .step .circle {
+            width: 40px;
+            height: 40px;
+            background: #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #1a472a, #2a623d);
+        }
+
+        .step.active .circle {
+            background: linear-gradient(135deg, #c41e3a, #e63946);
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.4);
+        }
+
+        .step .circle:after {
+            content: "🎁";
+            font-size: 14px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        .heart-animation {
+            font-size: 60px;
+            color: #c41e3a;
+            margin: 20px 0;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .thank-you-section {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .final-message {
+            font-size: 18px;
+            color: #666;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        /* ============ PANEL TÙY CHỈNH NÂNG CAO ============ */
+        .customization-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            z-index: 100;
+            width: 350px;
+            backdrop-filter: blur(20px);
+            border: 2px solid #c41e3a;
+            display: none;
+            max-height: 85vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        .customization-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .customization-panel.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .customization-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #c41e3a, #e63946);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 99;
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .customization-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        .customization-toggle:before {
+            content: "🎨";
+            position: absolute;
+            font-size: 12px;
+            top: -5px;
+            right: -5px;
+        }
+
+        .customization-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .customization-header h3 {
+            color: #c41e3a;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-panel {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 20px;
+            cursor: pointer;
+            width: auto;
+            padding: 0;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        .close-panel:hover {
+            color: #c41e3a;
+            transform: rotate(90deg);
+        }
+
+        /* Tabs cho các loại nền */
+        .background-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .background-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .background-tab:hover {
+            background: #e0e0e0;
+        }
+
+        .background-tab.active {
+            background: #c41e3a;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Các section nền */
+        .background-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .background-section.active {
+            display: block;
+        }
+
+        .background-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .bg-option {
+            height: 70px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .bg-option:hover {
+            transform: scale(1.05);
+        }
+
+        .bg-option.active {
+            border-color: #c41e3a;
+            box-shadow: 0 0 10px rgba(196, 30, 58, 0.5);
+        }
+
+        .bg-option:after {
+            content: attr(data-name);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 9px;
+            padding: 2px;
+            text-align: center;
+        }
+
+        /* Color picker */
+        .color-picker-container {
+            margin: 15px 0;
+        }
+
+        .color-picker-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #c41e3a;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .color-picker {
+            width: 100%;
+            height: 40px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 0;
+            background: transparent;
+        }
+
+        /* Gradient creator */
+        .gradient-creator {
+            margin: 15px 0;
+        }
+
+        .gradient-controls {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .gradient-color {
+            flex: 1;
+            height: 40px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .gradient-preview {
+            height: 60px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+        }
+
+        /* Image upload */
+        .image-upload-container {
+            margin: 15px 0;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 100px;
+            border-radius: 10px;
+            border: 2px dashed #c41e3a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+
+        /* Slide Selector */
+        .slide-selector {
+            margin: 15px 0;
+        }
+
+        .slide-selector label {
+            display: block;
+            margin-bottom: 8px;
+            color: #c41e3a;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .slide-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .slide-btn {
+            padding: 8px 15px;
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .slide-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .slide-btn.active {
+            background: #c41e3a;
+            color: white;
+            border-color: #c41e3a;
+        }
+
+        /* Music Controls */
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .music-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #c41e3a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .volume-slider {
+            flex: 1;
+            height: 5px;
+            -webkit-appearance: none;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #c41e3a;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .music-info {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        /* Admin Section */
+        .admin-only {
+            border-top: 2px solid #f0f0f0;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .admin-only h4 {
+            color: #c41e3a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+
+        /* Scroll to top button */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #c41e3a, #e63946);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 99;
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-top-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top-btn:hover {
+            transform: translateY(-5px);
+        }
+
+        .scroll-bottom-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2a9d8f, #2a623d);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 99;
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-bottom-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-bottom-btn:hover {
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                border-radius: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            h2 {
+                font-size: 24px;
+            }
+            
+            .heart-animation {
+                font-size: 50px;
+            }
+            
+            .customization-panel {
+                width: calc(100% - 40px);
+                max-width: 350px;
+                right: 20px;
+                left: 20px;
+                margin: 0 auto;
+            }
+            
+            .scroll-top-btn,
+            .scroll-bottom-btn {
+                bottom: 10px;
+                right: 10px;
+                width: 45px;
+                height: 45px;
+            }
+            
+            .scroll-top-btn {
+                bottom: 70px;
+            }
+        }
+
+        /* Christmas decorations */
+        .christmas-decoration {
+            position: absolute;
+            font-size: 20px;
+            z-index: 5;
+            animation: float 3s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        /* Santa hat for container */
+        .container:before {
+            content: "🎅";
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            z-index: 11;
+        }
+
+        /* Background themes - Noel style */
+        .bg-noel-1 { background: linear-gradient(135deg, #1a472a, #2a623d, #5d9b6c); }
+        .bg-noel-2 { background: linear-gradient(135deg, #c41e3a, #e63946, #ff6b6b); }
+        .bg-noel-3 { background: linear-gradient(135deg, #1e3c72, #2a5298, #4a6491); }
+        .bg-noel-4 { background: linear-gradient(135deg, #2d1b69, #3d28a3, #6a5acd); }
+        .bg-noel-5 { background: linear-gradient(135deg, #0f4c5c, #1b6b73, #2a9d8f); }
+        .bg-noel-6 { background: linear-gradient(135deg, #5a189a, #7b2cbf, #9d4edd); }
+        .bg-noel-7 { background: linear-gradient(135deg, #b5838d, #e5989b, #ffb4a2); }
+        .bg-noel-8 { background: linear-gradient(135deg, #ff9e00, #ffaa33, #ffb700); }
+        .bg-noel-9 { background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ffb4a2); }
+        .bg-noel-10 { background: linear-gradient(135deg, #4ecdc4, #6aecd8, #95f7e9); }
+
+        /* Border colors */
+        .border-red { border-color: #c41e3a !important; }
+        .border-green { border-color: #2a9d8f !important; }
+        .border-blue { border-color: #1e3c72 !important; }
+        .border-purple { border-color: #5a189a !important; }
+        .border-gold { border-color: #ff9e00 !important; }
+        .border-pink { border-color: #ff6b6b !important; }
+        .border-white { border-color: #ffffff !important; }
+        .border-black { border-color: #333333 !important; }
+
+        /* Box backgrounds */
+        .box-bg-1 { background: linear-gradient(135deg, #fff5f7, #ffe8ec) !important; }
+        .box-bg-2 { background: linear-gradient(135deg, #f0f7ff, #e6f7ff) !important; }
+        .box-bg-3 { background: linear-gradient(135deg, #f0fff4, #e6ffe6) !important; }
+        .box-bg-4 { background: linear-gradient(135deg, #fffaf0, #fff5e6) !important; }
+        .box-bg-5 { background: linear-gradient(135deg, #f8f0ff, #f0e6ff) !important; }
+        .box-bg-6 { background: linear-gradient(135deg, #fff0f5, #ffe6ee) !important; }
+        .box-bg-7 { background: linear-gradient(135deg, #f0fff0, #e6ffe6) !important; }
+        .box-bg-8 { background: linear-gradient(135deg, #f5f0ff, #eae6ff) !important; }
+
+        /* Custom background class */
+        .custom-bg {
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Snowflakes -->
+    <div id="snowflakes"></div>
+
+    <!-- Christmas Decorations -->
+    <div id="decorations"></div>
+
+    <!-- Scroll buttons -->
+    <div class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+    <div class="scroll-bottom-btn" id="scrollBottomBtn" onclick="scrollToBottom()">
+        <i class="fas fa-chevron-down"></i>
+    </div>
+
+    <!-- Customization Toggle Button -->
+    <div class="customization-toggle" onclick="toggleCustomizationPanel()">
+        <i class="fas fa-palette"></i>
+    </div>
+
+    <!-- Customization Panel -->
+    <div class="customization-panel" id="customizationPanel">
+        <div class="customization-header">
+            <h3><i class="fas fa-magic"></i> Tùy chỉnh nâng cao</h3>
+            <button class="close-panel" onclick="toggleCustomizationPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Tabs cho các loại nền -->
+        <div class="background-tabs">
+            <button class="background-tab active" onclick="switchBackgroundTab('page')">Nền trang</button>
+            <button class="background-tab" onclick="switchBackgroundTab('border')">Nền viền</button>
+            <button class="background-tab" onclick="switchBackgroundTab('box')">Nền khung</button>
+            <button class="background-tab" onclick="switchBackgroundTab('custom')">Tùy chỉnh</button>
+        </div>
+
+        <!-- Slide Selector -->
+        <div class="slide-selector">
+            <label><i class="fas fa-sliders-h"></i> Áp dụng cho:</label>
+            <div class="slide-options">
+                <span class="slide-btn active" onclick="selectSlide('all')">Tất cả</span>
+                <span class="slide-btn" onclick="selectSlide(1)">Slide 1</span>
+                <span class="slide-btn" onclick="selectSlide(2)">Slide 2</span>
+                <span class="slide-btn" onclick="selectSlide(3)">Slide 3</span>
+            </div>
+        </div>
+
+        <!-- ===== NỀN TRANG ===== -->
+        <div class="background-section active" id="pageBackgroundSection">
+            <h4><i class="fas fa-image"></i> Nền trang chính</h4>
+            <div class="background-options">
+                <div class="bg-option bg-noel-1 active" data-name="Noel Xanh" onclick="changePageBackground('bg-noel-1', 'linear-gradient(135deg, #1a472a, #2a623d, #5d9b6c)')"></div>
+                <div class="bg-option bg-noel-2" data-name="Noel Đỏ" onclick="changePageBackground('bg-noel-2', 'linear-gradient(135deg, #c41e3a, #e63946, #ff6b6b)')"></div>
+                <div class="bg-option bg-noel-3" data-name="Đêm Noel" onclick="changePageBackground('bg-noel-3', 'linear-gradient(135deg, #1e3c72, #2a5298, #4a6491)')"></div>
+                <div class="bg-option bg-noel-4" data-name="Tím Mộng Mơ" onclick="changePageBackground('bg-noel-4', 'linear-gradient(135deg, #2d1b69, #3d28a3, #6a5acd)')"></div>
+                <div class="bg-option bg-noel-5" data-name="Xanh Ngọc" onclick="changePageBackground('bg-noel-5', 'linear-gradient(135deg, #0f4c5c, #1b6b73, #2a9d8f)')"></div>
+                <div class="bg-option bg-noel-6" data-name="Tím Đam Mê" onclick="changePageBackground('bg-noel-6', 'linear-gradient(135deg, #5a189a, #7b2cbf, #9d4edd)')"></div>
+            </div>
+        </div>
+
+        <!-- ===== NỀN VIỀN ===== -->
+        <div class="background-section" id="borderBackgroundSection">
+            <h4><i class="fas fa-square"></i> Màu viền container</h4>
+            <div class="background-options">
+                <div class="bg-option" style="background: #c41e3a;" data-name="Đỏ Noel" onclick="changeBorderColor('border-red', '#c41e3a')"></div>
+                <div class="bg-option" style="background: #2a9d8f;" data-name="Xanh Ngọc" onclick="changeBorderColor('border-green', '#2a9d8f')"></div>
+                <div class="bg-option" style="background: #1e3c72;" data-name="Xanh Dương" onclick="changeBorderColor('border-blue', '#1e3c72')"></div>
+                <div class="bg-option" style="background: #5a189a;" data-name="Tím Đậm" onclick="changeBorderColor('border-purple', '#5a189a')"></div>
+                <div class="bg-option" style="background: #ff9e00;" data-name="Vàng Kim" onclick="changeBorderColor('border-gold', '#ff9e00')"></div>
+                <div class="bg-option" style="background: #ff6b6b;" data-name="Hồng Đào" onclick="changeBorderColor('border-pink', '#ff6b6b')"></div>
+                <div class="bg-option" style="background: #ffffff; border: 2px solid #ccc;" data-name="Trắng" onclick="changeBorderColor('border-white', '#ffffff')"></div>
+                <div class="bg-option" style="background: #333333;" data-name="Đen" onclick="changeBorderColor('border-black', '#333333')"></div>
+            </div>
+        </div>
+
+        <!-- ===== NỀN KHUNG ===== -->
+        <div class="background-section" id="boxBackgroundSection">
+            <h4><i class="fas fa-object-group"></i> Nền message box</h4>
+            <div class="background-options">
+                <div class="bg-option box-bg-1" data-name="Hồng Nhạt" onclick="changeBoxBackground('box-bg-1')"></div>
+                <div class="bg-option box-bg-2" data-name="Xanh Nhạt" onclick="changeBoxBackground('box-bg-2')"></div>
+                <div class="bg-option box-bg-3" data-name="Xanh Lá" onclick="changeBoxBackground('box-bg-3')"></div>
+                <div class="bg-option box-bg-4" data-name="Vàng Nhạt" onclick="changeBoxBackground('box-bg-4')"></div>
+                <div class="bg-option box-bg-5" data-name="Tím Nhạt" onclick="changeBoxBackground('box-bg-5')"></div>
+                <div class="bg-option box-bg-6" data-name="Hồng Đậm" onclick="changeBoxBackground('box-bg-6')"></div>
+                <div class="bg-option box-bg-7" data-name="Xanh Lá Đậm" onclick="changeBoxBackground('box-bg-7')"></div>
+                <div class="bg-option box-bg-8" data-name="Tím Xanh" onclick="changeBoxBackground('box-bg-8')"></div>
+            </div>
+        </div>
+
+        <!-- ===== TÙY CHỈNH NỀN ===== -->
+        <div class="background-section" id="customBackgroundSection">
+            <h4><i class="fas fa-paint-brush"></i> Tạo nền theo ý thích</h4>
+            
+            <!-- Color Picker -->
+            <div class="color-picker-container">
+                <label class="color-picker-label">Chọn màu đơn:</label>
+                <input type="color" class="color-picker" id="solidColorPicker" value="#1a472a" onchange="applySolidColor(this.value)">
+            </div>
+
+            <!-- Gradient Creator -->
+            <div class="gradient-creator">
+                <label class="color-picker-label">Tạo gradient:</label>
+                <div class="gradient-controls">
+                    <input type="color" class="gradient-color" id="gradientColor1" value="#1a472a" onchange="updateGradient()">
+                    <input type="color" class="gradient-color" id="gradientColor2" value="#2a623d" onchange="updateGradient()">
+                    <input type="color" class="gradient-color" id="gradientColor3" value="#5d9b6c" onchange="updateGradient()">
+                </div>
+                <div class="gradient-preview" id="gradientPreview"></div>
+                <button onclick="applyGradient()" style="margin: 5px 0; padding: 10px; font-size: 14px;">
+                    <i class="fas fa-check"></i> Áp dụng Gradient
+                </button>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="image-upload-container">
+                <label class="color-picker-label">Tải ảnh nền:</label>
+                <input type="file" id="bgImageUpload" accept="image/*" onchange="previewImage(this)" style="margin: 10px 0; width: 100%;">
+                <div class="image-preview" id="imagePreview">
+                    <span style="color: #666;">Preview sẽ hiển thị ở đây</span>
+                </div>
+                <button onclick="applyImageBackground()" style="margin: 5px 0; padding: 10px; font-size: 14px; background: #2a9d8f;">
+                    <i class="fas fa-image"></i> Áp dụng Ảnh Nền
+                </button>
+            </div>
+        </div>
+
+        <!-- Music Controls -->
+        <div class="music-controls">
+            <button class="music-btn" onclick="toggleMusic()" id="playPauseBtn">
+                <i class="fas fa-play" id="playPauseIcon"></i>
+            </button>
+            <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider" oninput="changeVolume(this.value)">
+            <button class="music-btn" onclick="stopMusic()">
+                <i class="fas fa-stop"></i>
+            </button>
+        </div>
+
+        <div class="music-info">
+            <p><i class="fas fa-music"></i> <span id="currentSong">Nhạc Giáng Sinh</span></p>
+            <p><i class="fas fa-volume-up"></i> Âm lượng: <span id="volumeValue">50%</span></p>
+        </div>
+
+        <!-- Admin Section -->
+        <div class="admin-only" id="adminSection" style="display: none;">
+            <h4><i class="fas fa-crown"></i> Quản trị viên</h4>
+            
+            <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                <i class="fas fa-info-circle"></i> Nhập mã "namlc1213" ở slide 2 để mở khóa
+            </p>
+
+            <h5><i class="fas fa-music"></i> Nhạc Giáng Sinh</h5>
+            <select id="musicSelect" onchange="changeChristmasMusic(this.value)" style="margin: 10px 0; width: 100%;">
+                <option value="1">Jingle Bells - Nhạc vui</option>
+                <option value="2">Last Christmas - Nhạc tình</option>
+                <option value="3">All I Want for Christmas - Nhạc pop</option>
+                <option value="4">Silent Night - Nhạc nhẹ</option>
+                <option value="custom">Tải nhạc của bạn</option>
+            </select>
+
+            <div id="customMusicUpload" style="display: none;">
+                <input type="file" id="musicUpload" accept="audio/*" style="margin: 10px 0; width: 100%;">
+                <button onclick="uploadCustomMusic()" style="margin: 5px 0; padding: 10px; font-size: 14px; background: #2a9d8f; width: 100%;">
+                    <i class="fas fa-upload"></i> Tải nhạc lên
+                </button>
+            </div>
+        </div>
+
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #f0f0f0;">
+            <p style="font-size: 12px; color: #888; text-align: center;">
+                <i class="fas fa-info-circle"></i> Thay đổi sẽ được lưu tự động
+            </p>
+        </div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="bgMusic" loop></audio>
+
+    <div class="container" id="mainContainer">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="step active" data-step="1">
+                <div class="circle">1</div>
+                <p>Lời chào</p>
+            </div>
+            <div class="step" data-step="2">
+                <div class="circle">2</div>
+                <p>Trả lời</p>
+            </div>
+            <div class="step" data-step="3">
+                <div class="circle">3</div>
+                <p>Quà tặng</p>
+            </div>
+        </div>
+
+        <!-- Slide 1: Greeting -->
+        <div class="slide active" id="slide1">
+            <div class="content">
+                <h1><i class="fas fa-tree"></i> Giáng Sinh Yêu Thương!</h1>
+                
+                <div class="message-box" id="messageBox1">
+                    <p>🎁 Có một món quà Giáng Sinh đặc biệt dành cho bạn...</p>
+                    <p>Trong đêm Noel ấm áp này, hãy mở trái tim mình ra 💖</p>
+                    <p style="color: #c41e3a; font-weight: 600; margin-top: 10px;">
+                        <i class="fas fa-star"></i> Mùa của yêu thương và tỏ tình <i class="fas fa-star"></i>
+                    </p>
+                </div>
+
+                <div style="text-align: center; margin: 20px 0;">
+                    <div style="display: inline-flex; gap: 15px; font-size: 24px;">
+                        <span>🎄</span>
+                        <span>❄️</span>
+                        <span>🎁</span>
+                        <span>🌟</span>
+                        <span>🦌</span>
+                    </div>
+                </div>
+
+                <p style="text-align: center; color: #666;">
+                    <i class="fas fa-info-circle"></i>
+                    Câu trả lời của bạn sẽ là món quà Giáng Sinh đẹp nhất
+                </p>
+
+                <button onclick="nextSlide()">
+                    <i class="fas fa-gift"></i> Mở quà ngay <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Slide 2: Question -->
+        <div class="slide" id="slide2">
+            <div class="content">
+                <h2><i class="fas fa-star"></i> Câu hỏi Giáng Sinh</h2>
+                
+                <div class="message-box" id="messageBox2">
+                    <p style="font-size: 22px; font-weight: 600; color: #c41e3a;">
+                        "Trong mùa Giáng Sinh này, bạn có muốn cùng tôi viết tiếp câu chuyện tình yêu không?" 💘
+                    </p>
+                    <p style="margin-top: 10px; font-style: italic;">
+                        🎄 Đây là món quà Noel đặc biệt nhất...
+                    </p>
+                </div>
+
+                <div class="response-buttons">
+                    <button class="response-btn yes" onclick="selectAnswer('yes')">
+                        <i class="fas fa-heart"></i> Có, tôi đồng ý! 🎁
+                    </button>
+                    <button class="response-btn no" onclick="selectAnswer('no')">
+                        <i class="fas fa-snowflake"></i> Không, xin lỗi ❄️
+                    </button>
+                    <button class="response-btn maybe" onclick="selectAnswer('maybe')">
+                        <i class="fas fa-thinking"></i> Để tôi suy nghĩ... 🤔
+                    </button>
+                </div>
+
+                <textarea id="userMessage" placeholder="Viết lời nhắn Giáng Sinh cho người gửi... (tuỳ chọn)" maxlength="300"></textarea>
+                
+                <input type="text" id="userName" placeholder="Tên hoặc biệt danh của bạn (bắt buộc)" required oninput="checkAdminAccess()">
+
+                <div style="text-align: center; margin: 10px 0;">
+                    <p style="font-size: 12px; color: #888;">
+                        <i class="fas fa-snowman"></i> Nhập mã "namlc1213" để mở tính năng đặc biệt
+                    </p>
+                </div>
+
+                <button onclick="submitResponse()" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> Gửi câu trả lời
+                </button>
+
+                <p style="text-align: center; color: #666; font-size: 14px; margin-top: 15px;">
+                    <i class="fas fa-lock"></i> Tin nhắn được gửi an toàn qua Telegram
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Thank You -->
+        <div class="slide" id="slide3">
+            <div class="thank-you-section">
+                <div class="heart-animation">
+                    <i class="fas fa-gift"></i>
+                </div>
+                
+                <h2>Cảm ơn bạn! 🎄</h2>
+                
+                <div class="simple-message" id="messageBox3">
+                    <p class="highlight-text" id="thankYouMessage">
+                        Cảm ơn bạn đã trả lời trong mùa Giáng Sinh!
+                    </p>
+                    <p class="final-message">
+                        Người gửi đã nhận được món quà tinh thần quý giá từ bạn. 
+                        Hy vọng Noel này sẽ thật ấm áp và tràn ngập yêu thương! 💕
+                    </p>
+                    
+                    <div style="margin: 20px 0; display: flex; justify-content: center; gap: 10px; font-size: 24px;">
+                        <span>🎅</span>
+                        <span>🦌</span>
+                        <span>🎄</span>
+                        <span>🌟</span>
+                        <span>🎁</span>
+                    </div>
+                </div>
+
+                <div class="reply-section">
+                    <h3><i class="fas fa-reply"></i> Gửi lời chúc Giáng Sinh?</h3>
+                    <textarea id="replyMessage" placeholder="Viết lời chúc Noel cho người gửi..."></textarea>
+                    
+                    <button onclick="sendReply()">
+                        <i class="fas fa-share"></i> Gửi lời chúc
+                    </button>
+                </div>
+
+                <div class="final-actions" style="margin-top: 30px;">
+                    <button onclick="shareLink()" style="background: #1a472a;">
+                        <i class="fas fa-share-alt"></i> Chia sẻ trang Noel
+                    </button>
+                    <button onclick="createYourOwn()" style="background: #ff9e00; margin-top: 10px;">
+                        <i class="fas fa-plus"></i> Tạo trang Noel của bạn
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // ============ CẤU HÌNH TELEGRAM ============
+        const TELEGRAM_CONFIG = {
+            botToken: "8503904022:AAElyplbto709iklzz6qRTAhnszWjMj_-1Q",
+            chatId: "5787223699",
+            enabled: true
+        };
+
+        // ============ BIẾN TOÀN CỤC ============
+        let currentSlide = 1;
+        let selectedAnswer = '';
+        let isMusicPlaying = false;
+        let selectedSlideForBg = 'all';
+        let isAdmin = false;
+        const ADMIN_CODE = "namlc1213";
+        
+        // Settings storage
+        let currentSettings = {
+            pageBackground: 'bg-noel-1',
+            pageBackgroundStyle: 'linear-gradient(135deg, #1a472a, #2a623d, #5d9b6c)',
+            borderColor: 'border-red',
+            borderColorValue: '#c41e3a',
+            boxBackground: 'box-bg-1',
+            customBackground: null,
+            slide: 'all'
+        };
+
+        // Nhạc Giáng Sinh
+        const christmasMusic = {
+            1: "https://assets.mixkit.co/music/preview/mixkit-jingle-bells-311.mp3",
+            2: "https://assets.mixkit.co/music/preview/mixkit-christmas-time-244.mp3",
+            3: "https://assets.mixkit.co/music/preview/mixkit-christmas-cheer-243.mp3",
+            4: "https://assets.mixkit.co/music/preview/mixkit-silent-night-304.mp3"
+        };
+
+        // ============ KHỞI TẠO TRANG ============
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎨 Website Noel với tùy chỉnh nâng cao đã sẵn sàng!');
+            
+            // Tạo tuyết rơi
+            createSnowflakes();
+            
+            // Tạo trang trí Noel
+            createChristmasDecorations();
+            
+            // Khởi tạo nhạc
+            initChristmasMusic();
+            
+            // Load settings
+            loadSettings();
+            
+            // Update gradient preview
+            updateGradient();
+            
+            // Scroll buttons visibility
+            window.addEventListener('scroll', updateScrollButtons);
+            
+            // Check scroll on load
+            updateScrollButtons();
+            
+            // Focus vào ô tên khi vào slide 2
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.target.id === 'slide2' && mutation.target.classList.contains('active')) {
+                        document.getElementById('userName').focus();
+                    }
+                });
+            });
+            
+            observer.observe(document.getElementById('slide2'), {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+        });
+
+        // ============ TUYẾT RƠI ============
+        function createSnowflakes() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            for (let i = 0; i < 50; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                const size = Math.random() * 5 + 2;
+                snowflake.style.width = size + 'px';
+                snowflake.style.height = size + 'px';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.top = Math.random() * -100 + 'px';
+                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+                snowflake.style.animationDuration = Math.random() * 5 + 5 + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflakesContainer.appendChild(snowflake);
+            }
+        }
+
+        // ============ TRANG TRÍ NOEL ============
+        function createChristmasDecorations() {
+            const decorationsContainer = document.getElementById('decorations');
+            const emojis = ['🎄', '🎁', '🌟', '❄️', '🦌', '🎅', '🤶', '🔔'];
+            
+            for (let i = 0; i < 15; i++) {
+                const decoration = document.createElement('div');
+                decoration.className = 'christmas-decoration';
+                decoration.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                decoration.style.left = Math.random() * 100 + '%';
+                decoration.style.top = Math.random() * 100 + '%';
+                decoration.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                decoration.style.opacity = Math.random() * 0.3 + 0.2;
+                decoration.style.animationDuration = Math.random() * 4 + 3 + 's';
+                decoration.style.animationDelay = Math.random() * 5 + 's';
+                decorationsContainer.appendChild(decoration);
+            }
+        }
+
+        // ============ HỆ THỐNG NỀN NÂNG CAO ============
+        function switchBackgroundTab(tabName) {
+            // Cập nhật tabs
+            document.querySelectorAll('.background-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Hiển thị section tương ứng
+            document.querySelectorAll('.background-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(tabName + 'BackgroundSection').classList.add('active');
+        }
+
+        function selectSlide(slide) {
+            selectedSlideForBg = slide;
+            currentSettings.slide = slide;
+            
+            // Cập nhật UI
+            document.querySelectorAll('.slide-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Áp dụng lại tất cả settings
+            applyAllSettings();
+            
+            showNotification(`✅ Đã chọn đổi nền cho ${slide === 'all' ? 'tất cả slide' : 'slide ' + slide}`);
+        }
+
+        // ===== NỀN TRANG =====
+        function changePageBackground(bgClass, bgStyle) {
+            currentSettings.pageBackground = bgClass;
+            currentSettings.pageBackgroundStyle = bgStyle;
+            
+            // Cập nhật UI
+            document.querySelectorAll('#pageBackgroundSection .bg-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            applyPageBackground();
+            saveSettings();
+        }
+
+        function applyPageBackground() {
+            if (selectedSlideForBg === 'all') {
+                document.body.className = '';
+                document.body.classList.add(currentSettings.pageBackground);
+                document.body.style.background = currentSettings.pageBackgroundStyle;
+            } else {
+                const slide = document.getElementById(`slide${selectedSlideForBg}`);
+                if (slide) {
+                    document.querySelectorAll('.slide').forEach(s => {
+                        s.style.background = '';
+                    });
+                    slide.style.background = currentSettings.pageBackgroundStyle;
+                }
+            }
+        }
+
+        // ===== NỀN VIỀN =====
+        function changeBorderColor(borderClass, colorValue) {
+            currentSettings.borderColor = borderClass;
+            currentSettings.borderColorValue = colorValue;
+            
+            // Cập nhật UI
+            document.querySelectorAll('#borderBackgroundSection .bg-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            applyBorderColor();
+            saveSettings();
+        }
+
+        function applyBorderColor() {
+            const container = document.getElementById('mainContainer');
+            container.className = container.className.replace(/border-\w+/g, '');
+            container.classList.add(currentSettings.borderColor);
+            container.style.borderColor = currentSettings.borderColorValue;
+        }
+
+        // ===== NỀN KHUNG =====
+        function changeBoxBackground(bgClass) {
+            currentSettings.boxBackground = bgClass;
+            
+            // Cập nhật UI
+            document.querySelectorAll('#boxBackgroundSection .bg-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            applyBoxBackground();
+            saveSettings();
+        }
+
+        function applyBoxBackground() {
+            const messageBoxes = document.querySelectorAll('.message-box, .simple-message');
+            messageBoxes.forEach(box => {
+                box.className = box.className.replace(/box-bg-\d/g, '');
+                box.classList.add(currentSettings.boxBackground);
+            });
+        }
+
+        // ===== NỀN TÙY CHỈNH =====
+        function applySolidColor(color) {
+            if (selectedSlideForBg === 'all') {
+                document.body.style.background = color;
+            } else {
+                const slide = document.getElementById(`slide${selectedSlideForBg}`);
+                if (slide) slide.style.background = color;
+            }
+            currentSettings.customBackground = color;
+            saveSettings();
+            showNotification('✅ Đã áp dụng màu nền');
+        }
+
+        function updateGradient() {
+            const color1 = document.getElementById('gradientColor1').value;
+            const color2 = document.getElementById('gradientColor2').value;
+            const color3 = document.getElementById('gradientColor3').value;
+            const gradient = `linear-gradient(135deg, ${color1}, ${color2}, ${color3})`;
+            document.getElementById('gradientPreview').style.background = gradient;
+        }
+
+        function applyGradient() {
+            const color1 = document.getElementById('gradientColor1').value;
+            const color2 = document.getElementById('gradientColor2').value;
+            const color3 = document.getElementById('gradientColor3').value;
+            const gradient = `linear-gradient(135deg, ${color1}, ${color2}, ${color3})`;
+            
+            if (selectedSlideForBg === 'all') {
+                document.body.style.background = gradient;
+            } else {
+                const slide = document.getElementById(`slide${selectedSlideForBg}`);
+                if (slide) slide.style.background = gradient;
+            }
+            currentSettings.customBackground = gradient;
+            saveSettings();
+            showNotification('✅ Đã áp dụng gradient nền');
+        }
+
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function applyImageBackground() {
+            const input = document.getElementById('bgImageUpload');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;
+                    if (selectedSlideForBg === 'all') {
+                        document.body.style.background = `url('${imageUrl}') center/cover no-repeat`;
+                        document.body.classList.add('custom-bg');
+                    } else {
+                        const slide = document.getElementById(`slide${selectedSlideForBg}`);
+                        if (slide) {
+                            slide.style.background = `url('${imageUrl}') center/cover no-repeat`;
+                            slide.classList.add('custom-bg');
+                        }
+                    }
+                    currentSettings.customBackground = imageUrl;
+                    saveSettings();
+                    showNotification('✅ Đã áp dụng ảnh nền');
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                showNotification('Vui lòng chọn ảnh trước', 'error');
+            }
+        }
+
+        function applyAllSettings() {
+            applyPageBackground();
+            applyBorderColor();
+            applyBoxBackground();
+        }
+
+        // ============ LƯU VÀ LOAD SETTINGS ============
+        function saveSettings() {
+            localStorage.setItem('noelAdvancedSettings', JSON.stringify(currentSettings));
+        }
+
+        function loadSettings() {
+            const saved = localStorage.getItem('noelAdvancedSettings');
+            if (saved) {
+                try {
+                    currentSettings = JSON.parse(saved);
+                    selectedSlideForBg = currentSettings.slide;
+                    
+                    // Cập nhật UI
+                    document.querySelectorAll('.slide-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.querySelector(`.slide-btn[onclick*="${selectedSlideForBg}"]`)?.classList.add('active');
+                    
+                    // Áp dụng settings
+                    applyAllSettings();
+                    
+                    // Cập nhật active states
+                    updateActiveStates();
+                } catch (e) {
+                    console.error('Lỗi load settings:', e);
+                }
+            }
+        }
+
+        function updateActiveStates() {
+            // Page background
+            document.querySelectorAll('#pageBackgroundSection .bg-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            document.querySelector(`#pageBackgroundSection .${currentSettings.pageBackground}`)?.classList.add('active');
+            
+            // Border color
+            document.querySelectorAll('#borderBackgroundSection .bg-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            
+            // Box background
+            document.querySelectorAll('#boxBackgroundSection .bg-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            document.querySelector(`#boxBackgroundSection .${currentSettings.boxBackground}`)?.classList.add('active');
+        }
+
+        // ============ HỆ THỐNG NHẠC ============
+        const bgMusic = document.getElementById('bgMusic');
+
+        function initChristmasMusic() {
+            bgMusic.src = christmasMusic[1];
+            bgMusic.volume = 0.5;
+        }
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                document.getElementById('playPauseIcon').className = 'fas fa-play';
+                isMusicPlaying = false;
+            } else {
+                bgMusic.play().then(() => {
+                    document.getElementById('playPauseIcon').className = 'fas fa-pause';
+                    isMusicPlaying = true;
+                }).catch(error => {
+                    showNotification('Không thể phát nhạc', 'error');
+                });
+            }
+        }
+
+        function stopMusic() {
+            bgMusic.pause();
+            bgMusic.currentTime = 0;
+            document.getElementById('playPauseIcon').className = 'fas fa-play';
+            isMusicPlaying = false;
+        }
+
+        function changeVolume(value) {
+            bgMusic.volume = value / 100;
+            document.getElementById('volumeValue').textContent = value + '%';
+        }
+
+        function changeChristmasMusic(option) {
+            if (option === 'custom') {
+                document.getElementById('customMusicUpload').style.display = 'block';
+            } else {
+                document.getElementById('customMusicUpload').style.display = 'none';
+                if (christmasMusic[option]) {
+                    bgMusic.src = christmasMusic[option];
+                    if (isMusicPlaying) {
+                        bgMusic.play();
+                    }
+                    showNotification('Đã đổi nhạc Giáng Sinh', 'success');
+                }
+            }
+        }
+
+        function uploadCustomMusic() {
+            const fileInput = document.getElementById('musicUpload');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showNotification('Vui lòng chọn file nhạc', 'error');
+                return;
+            }
+            
+            if (!file.type.startsWith('audio/')) {
+                showNotification('File phải là file âm thanh', 'error');
+                return;
+            }
+            
+            const url = URL.createObjectURL(file);
+            bgMusic.src = url;
+            if (isMusicPlaying) {
+                bgMusic.play();
+            }
+            showNotification('Đã tải nhạc Giáng Sinh của bạn', 'success');
+        }
+
+        // ============ KIỂM TRA ADMIN ============
+        function checkAdminAccess() {
+            const userName = document.getElementById('userName').value.trim();
+            
+            if (userName === ADMIN_CODE && !isAdmin) {
+                isAdmin = true;
+                document.getElementById('adminSection').style.display = 'block';
+                showNotification('🎅 Xin chào Admin! Bạn có thể tùy chỉnh trang Noel', 'success');
+            }
+        }
+
+        // ============ PANEL TÙY CHỈNH ============
+        function toggleCustomizationPanel() {
+            const panel = document.getElementById('customizationPanel');
+            panel.classList.toggle('active');
+        }
+
+        // ============ SCROLL FUNCTIONS ============
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        function updateScrollButtons() {
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            const scrollBottomBtn = document.getElementById('scrollBottomBtn');
+            
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+            
+            if (window.innerHeight + window.scrollY < document.body.scrollHeight - 100) {
+                scrollBottomBtn.classList.add('show');
+            } else {
+                scrollBottomBtn.classList.remove('show');
+            }
+        }
+
+        // ============ CÁC HÀM ĐIỀU HƯỚNG ============
+        function nextSlide() {
+            if (currentSlide < 3) {
+                document.getElementById(`slide${currentSlide}`).classList.remove('active');
+                document.querySelector(`.step[data-step="${currentSlide}"]`).classList.remove('active');
+                
+                currentSlide++;
+                
+                document.getElementById(`slide${currentSlide}`).classList.add('active');
+                document.querySelector(`.step[data-step="${currentSlide}"]`).classList.add('active');
+                
+                // Scroll to top khi chuyển slide
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function selectAnswer(answer) {
+            selectedAnswer = answer;
+            
+            document.querySelectorAll('.response-btn').forEach(btn => {
+                btn.style.opacity = '0.6';
+                btn.style.transform = 'scale(0.95)';
+            });
+            
+            const selectedBtn = event.target.closest('button');
+            selectedBtn.style.opacity = '1';
+            selectedBtn.style.transform = 'scale(1.05)';
+            selectedBtn.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            
+            showNotification('Đã chọn câu trả lời!', 'info');
+        }
+
+        // ============ GỬI TELEGRAM ============
+        async function sendToTelegram(message) {
+            if (!TELEGRAM_CONFIG.enabled) return false;
+            
+            try {
+                const url = `https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/sendMessage`;
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CONFIG.chatId,
+                        text: message,
+                        parse_mode: 'HTML',
+                        disable_web_page_preview: true
+                    })
+                });
+                
+                const result = await response.json();
+                return result.ok;
+                
+            } catch (error) {
+                console.error('Lỗi gửi Telegram:', error);
+                return false;
+            }
+        }
+
+        function getAnswerEmoji(answer) {
+            const emojis = {
+                'yes': '💖🎁',
+                'no': '💔❄️',
+                'maybe': '🤔🎄'
+            };
+            return emojis[answer] || '💌';
+        }
+
+        function getAnswerText(answer) {
+            const texts = {
+                'yes': 'CÓ - ĐỒNG Ý! 🎉🎄',
+                'no': 'KHÔNG',
+                'maybe': 'SUY NGHĨ THÊM...'
+            };
+            return texts[answer] || 'Không xác định';
+        }
+
+        async function submitResponse() {
+            const userName = document.getElementById('userName').value.trim();
+            const message = document.getElementById('userMessage').value.trim();
+            
+            if (!userName) {
+                showNotification('Vui lòng nhập tên của bạn!', 'error');
+                return;
+            }
+            
+            if (!selectedAnswer) {
+                showNotification('Vui lòng chọn câu trả lời!', 'error');
+                return;
+            }
+            
+            const responseData = {
+                userName: userName,
+                answer: selectedAnswer,
+                message: message,
+                timestamp: new Date().toLocaleString('vi-VN'),
+                theme: 'Noel'
+            };
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+            submitBtn.disabled = true;
+            
+            const telegramMessage = `
+<b>🎄 CÓ NGƯỜI TRẢ LỜI VÀO GIÁNG SINH!</b>
+
+👤 <b>Tên:</b> ${userName}
+${getAnswerEmoji(selectedAnswer)} <b>Câu trả lời:</b> ${getAnswerText(selectedAnswer)}
+${message ? `📝 <b>Lời nhắn Noel:</b>\n${message}\n` : ''}
+⏰ <b>Thời gian:</b> ${responseData.timestamp}
+🎅 <b>Chủ đề:</b> Giáng Sinh Yêu Thương
+            `.trim();
+            
+            const telegramSent = await sendToTelegram(telegramMessage);
+            
+            if (telegramSent) {
+                showNotification('🎁 Đã gửi thành công!', 'success');
+                
+                updateThankYouMessage(userName, selectedAnswer, message);
+                
+                setTimeout(() => {
+                    nextSlide();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 1000);
+                
+            } else {
+                showNotification('Gửi thất bại, vui lòng thử lại', 'error');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function updateThankYouMessage(userName, answer, extraMessage) {
+            const thankYouMessage = document.getElementById('thankYouMessage');
+            
+            let responseText = '';
+            switch(answer) {
+                case 'yes':
+                    responseText = `🎄 Cảm ơn ${userName} đã đồng ý! Noel này thật tuyệt vời!`;
+                    break;
+                case 'no':
+                    responseText = `❄️ Cảm ơn ${userName} đã thành thật trả lời.`;
+                    break;
+                case 'maybe':
+                    responseText = `🎁 Cảm ơn ${userName} đã cân nhắc câu trả lời.`;
+                    break;
+            }
+            
+            thankYouMessage.innerHTML = responseText;
+            
+            if (extraMessage) {
+                const finalMessage = document.querySelector('.final-message');
+                finalMessage.innerHTML = `
+                    Với lời nhắn Noel: <em>"${extraMessage}"</em><br><br>
+                    Người gửi đã nhận được món quà tinh thần quý giá từ bạn! 💕
+                `;
+            }
+        }
+
+        async function sendReply() {
+            const reply = document.getElementById('replyMessage').value.trim();
+            
+            if (!reply) {
+                showNotification('Vui lòng nhập lời nhắn!', 'error');
+                return;
+            }
+            
+            const replyMessage = `
+<b>🎄 LỜI CHÚC NOEL TỪ NGƯỜI TRẢ LỜI:</b>
+
+📝 <b>Lời chúc:</b>
+${reply}
+
+⏰ <b>Thời gian:</b> ${new Date().toLocaleString('vi-VN')}
+            `.trim();
+            
+            const sent = await sendToTelegram(replyMessage);
+            
+            if (sent) {
+                showNotification('🎅 Đã gửi lời chúc Noel!', 'success');
+                document.getElementById('replyMessage').value = '';
+                
+                const replySection = document.querySelector('.reply-section');
+                replySection.innerHTML = `
+                    <div style="text-align: center; color: #2a9d8f; padding: 20px;">
+                        <i class="fas fa-check-circle" style="font-size: 40px;"></i>
+                        <h3>Đã gửi lời chúc!</h3>
+                        <p>Người gửi sẽ rất vui khi nhận được lời chúc Giáng Sinh của bạn</p>
+                    </div>
+                `;
+            } else {
+                showNotification('Gửi lời chúc thất bại', 'error');
+            }
+        }
+
+        // ============ CÁC CHỨC NĂNG KHÁC ============
+        function shareLink() {
+            const url = window.location.href;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: '🎄 Giáng Sinh Yêu Thương',
+                    text: 'Ai đó muốn gửi bạn lời tỏ tình trong mùa Giáng Sinh!',
+                    url: url
+                });
+            } else {
+                navigator.clipboard.writeText(url).then(() => {
+                    showNotification('🎁 Đã copy link!', 'success');
+                });
+            }
+        }
+
+        function createYourOwn() {
+            showNotification('🎄 Tính năng đang phát triển!', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            
+            const colors = {
+                success: '#2a9d8f',
+                error: '#e63946',
+                warning: '#ffb703',
+                info: '#1a472a'
+            };
+            
+            notification.style.background = colors[type] || colors.info;
+            notification.textContent = message;
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 DearGift - Giáng Sinh Yêu Thương</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ... (giữ nguyên CSS) ... */
+
+        /* ============ STYLE CHO GITHUB UPLOAD ============ */
+        .github-upload-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #2a9d8f;
+            display: none;
+        }
+
+        .github-upload-info.show {
+            display: block;
+        }
+
+        .github-upload-info h5 {
+            color: #2a9d8f;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .github-link {
+            background: #24292e;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .github-link.show {
+            display: block;
+        }
+
+        .copy-link-btn {
+            background: #2a9d8f;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .copy-link-btn:hover {
+            background: #1b6b73;
+        }
+
+        .upload-progress {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .upload-progress.show {
+            display: block;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #2a9d8f, #1b6b73);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ... (giữ nguyên HTML) ... -->
+
+    <!-- Trong phần Audio Upload Section -->
+    <div class="github-upload-info" id="githubUploadInfo">
+        <h5><i class="fab fa-github"></i> Upload lên GitHub</h5>
+        <p style="font-size: 14px; color: #666; margin-bottom: 10px;">
+            <i class="fas fa-info-circle"></i> File sẽ được upload lên web chính
+        </p>
+        
+        <div class="upload-progress" id="uploadProgress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText"></div>
+        
+        <div class="github-link" id="githubLink"></div>
+        
+        <button class="copy-link-btn" id="copyLinkBtn" onclick="copyGithubLink()" style="display: none;">
+            <i class="fas fa-copy"></i> Copy Link
+        </button>
+        
+        <p style="font-size: 12px; color: #888; margin-top: 10px;">
+            <i class="fas fa-exclamation-triangle"></i> 
+            Cần quyền write access vào repository
+        </p>
+    </div>
+
+    <script>
+        // ============ BIẾN TOÀN CỤC MỚI ============
+        const GITHUB_CONFIG = {
+            owner: 'ILU276-n7cql0',
+            repo: 'noelsp',
+            branch: 'main',
+            token: '', // Cần token để upload
+            uploadedFileUrl: ''
+        };
+
+        // ============ XỬ LÝ UPLOAD LÊN GITHUB ============
+        async function uploadToGitHub(file) {
+            if (!isAudioUnlocked) {
+                showNotification('Vui lòng mở khóa tính năng trước!', 'warning');
+                return;
+            }
+
+            // Hiển thị progress
+            const progressDiv = document.getElementById('githubUploadInfo');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const uploadProgress = document.getElementById('uploadProgress');
+            
+            progressDiv.classList.add('show');
+            uploadProgress.classList.add('show');
+            progressText.textContent = 'Đang chuẩn bị upload...';
+            progressBar.style.width = '10%';
+
+            try {
+                // 1. Hỏi GitHub Token (nếu chưa có)
+                if (!GITHUB_CONFIG.token) {
+                    const token = prompt(
+                        '🔐 Nhập GitHub Personal Access Token:\n\n' +
+                        'Cần token với quyền repo để upload file.\n' +
+                        'Lấy token tại: https://github.com/settings/tokens\n\n' +
+                        '⚠️ Token chỉ lưu tạm thời, không lưu vĩnh viễn',
+                        ''
+                    );
+                    
+                    if (!token) {
+                        showNotification('❌ Cần token để upload lên GitHub', 'error');
+                        return;
+                    }
+                    GITHUB_CONFIG.token = token;
+                }
+
+                progressBar.style.width = '30%';
+                progressText.textContent = 'Đang đọc file...';
+
+                // 2. Chuyển file thành Base64
+                const reader = new FileReader();
+                const fileContent = await new Promise((resolve, reject) => {
+                    reader.onload = () => resolve(reader.result.split(',')[1]);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+
+                progressBar.style.width = '50%';
+                progressText.textContent = 'Đang kết nối GitHub...';
+
+                // 3. Tạo filename độc đáo
+                const timestamp = Date.now();
+                const safeFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_');
+                const fileName = `audio_${timestamp}_${safeFileName}`;
+
+                // 4. Tạo commit message
+                const commitMessage = `🎵 Upload audio: ${file.name}`;
+
+                // 5. Gọi GitHub API
+                const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${fileName}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${GITHUB_CONFIG.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: commitMessage,
+                        content: fileContent,
+                        branch: GITHUB_CONFIG.branch
+                    })
+                });
+
+                progressBar.style.width = '80%';
+                progressText.textContent = 'Đang xử lý...';
+
+                if (!response.ok) {
+                    throw new Error(`GitHub API error: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                // 6. Tạo link truy cập
+                GITHUB_CONFIG.uploadedFileUrl = `https://ilu276-n7cql0.github.io/noelsp/${fileName}`;
+                
+                progressBar.style.width = '100%';
+                progressText.textContent = '✅ Upload thành công!';
+
+                // 7. Hiển thị link
+                const githubLink = document.getElementById('githubLink');
+                const copyBtn = document.getElementById('copyLinkBtn');
+                
+                githubLink.textContent = GITHUB_CONFIG.uploadedFileUrl;
+                githubLink.classList.add('show');
+                copyBtn.style.display = 'flex';
+                
+                // 8. Lưu vào LocalStorage (backup)
+                saveAudioLocally(file, fileContent);
+                
+                // 9. Cập nhật player với link mới
+                updateAudioPlayerWithUrl(GITHUB_CONFIG.uploadedFileUrl);
+                
+                showNotification('🎉 Đã upload nhạc lên web thành công!', 'success');
+                
+                // Tự động copy link sau 2 giây
+                setTimeout(copyGithubLink, 2000);
+
+            } catch (error) {
+                console.error('Upload error:', error);
+                progressText.textContent = '❌ Upload thất bại';
+                progressBar.style.background = '#e63946';
+                
+                // Fallback: Lưu local
+                if (file) {
+                    showNotification('Đang lưu nhạc trên máy bạn...', 'warning');
+                    handleLocalUpload(file);
+                }
+            }
+        }
+
+        // ============ UPLOAD LOCAL (FALLBACK) ============
+        function handleLocalUpload(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedAudioData = e.target.result;
+                uploadedAudioName = file.name;
+                uploadedAudioSize = file.size;
+                
+                saveAudioToStorage();
+                displayAudioInfo();
+                updateAudioPlayer();
+                
+                showUploadStatus(`✅ Đã lưu "${file.name}" trên máy bạn`, 'success');
+                showNotification('⚠️ File chỉ lưu trên máy bạn, không lên web', 'warning');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveAudioLocally(file, base64Content) {
+            const audioData = {
+                name: file.name,
+                data: `data:${file.type};base64,${base64Content}`,
+                size: file.size,
+                timestamp: new Date().getTime(),
+                githubUrl: GITHUB_CONFIG.uploadedFileUrl
+            };
+            
+            localStorage.setItem('noelUploadedAudio', JSON.stringify(audioData));
+        }
+
+        // ============ CẬP NHẬT PLAYER VỚI URL ============
+        function updateAudioPlayerWithUrl(url) {
+            const audioPlayer = document.getElementById('uploadedAudioPlayer');
+            audioPlayer.src = url;
+            document.getElementById('audioPlayerWrapper').classList.add('show');
+        }
+
+        // ============ COPY LINK ============
+        function copyGithubLink() {
+            if (!GITHUB_CONFIG.uploadedFileUrl) return;
+            
+            navigator.clipboard.writeText(GITHUB_CONFIG.uploadedFileUrl).then(() => {
+                showNotification('✅ Đã copy link nhạc!', 'success');
+                document.getElementById('copyLinkBtn').innerHTML = '<i class="fas fa-check"></i> Đã copy';
+                
+                setTimeout(() => {
+                    document.getElementById('copyLinkBtn').innerHTML = '<i class="fas fa-copy"></i> Copy Link';
+                }, 2000);
+            });
+        }
+
+        // ============ SỬA LẠI HÀM UPLOAD ============
+        // Thay thế hàm handleAudioUpload cũ
+        const originalHandleAudioUpload = handleAudioUpload;
+        handleAudioUpload = function(file) {
+            if (!isAudioUnlocked) {
+                showNotification('Vui lòng mở khóa tính năng trước!', 'warning');
+                openKeyModal();
+                return;
+            }
+            
+            // Hỏi người dùng muốn upload kiểu gì
+            const uploadChoice = confirm(
+                '🎵 Chọn cách upload:\n\n' +
+                'OK - Upload lên web (mọi người đều nghe được)\n' +
+                'Cancel - Chỉ lưu trên máy bạn (chỉ bạn nghe được)\n\n' +
+                '⚠️ Upload lên web cần GitHub Token'
+            );
+            
+            if (uploadChoice) {
+                // Upload lên GitHub (web gốc)
+                uploadToGitHub(file);
+            } else {
+                // Chỉ lưu local
+                handleLocalUpload(file);
+            }
+        };
+
+        // ============ KIỂM TRA FILE ĐÃ UPLOAD TRƯỚC ĐÓ ============
+        function loadSavedAudio() {
+            try {
+                const saved = localStorage.getItem('noelUploadedAudio');
+                if (saved) {
+                    const audioData = JSON.parse(saved);
+                    uploadedAudioData = audioData.data;
+                    uploadedAudioName = audioData.name;
+                    uploadedAudioSize = audioData.size;
+                    
+                    // Nếu có githubUrl, dùng link đó
+                    if (audioData.githubUrl) {
+                        GITHUB_CONFIG.uploadedFileUrl = audioData.githubUrl;
+                        updateAudioPlayerWithUrl(audioData.githubUrl);
+                        
+                        // Hiển thị link
+                        const githubLink = document.getElementById('githubLink');
+                        const copyBtn = document.getElementById('copyLinkBtn');
+                        githubLink.textContent = audioData.githubUrl;
+                        githubLink.classList.add('show');
+                        copyBtn.style.display = 'flex';
+                        document.getElementById('githubUploadInfo').classList.add('show');
+                    } else {
+                        // Chỉ có local
+                        displayAudioInfo();
+                        updateAudioPlayer();
+                    }
+                }
+            } catch (e) {
+                console.error('Lỗi tải audio:', e);
+            }
+        }
+    </script>
+</body>
+</html>
