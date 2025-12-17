@@ -1471,3 +1471,16 @@ ${message ? `📝 <b>Lời nhắn:</b>\n${message}\n` : ''}
     </script>
 </body>
 </html>
+
+<audio id="bg-music" loop>
+    <source src="LAN CUOI · KARIK LYRICS VIDEO.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    // Phát nhạc khi người dùng click vào trang
+    document.addEventListener('click', function() {
+        var music = document.getElementById('bg-music');
+        music.volume = 0.3;
+        music.play();
+    });
+</script>
