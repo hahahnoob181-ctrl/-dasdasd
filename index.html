@@ -1127,6 +1127,11 @@
         <div class="music-info">
             <p><i class="fas fa-music"></i> <span id="currentSong">LAN CUỐI - KARIK</span></p>
             <p><i class="fas fa-volume-up"></i> Âm lượng: <span id="volumeValue">50%</span></p>
+            
+            <!-- THÊM NÚT KIỂM TRA -->
+            <button id="testMusicBtn" style="margin-top: 10px; padding: 8px; font-size: 12px; background: #2a9d8f; width: 100%;">
+                <i class="fas fa-bug"></i> Test Nhạc
+            </button>
         </div>
 
         <!-- Admin Section -->
@@ -1388,44 +1393,175 @@
             }
         }
 
-        // ============ HỆ THỐNG NHẠC ============
+        // ============ HỆ THỐNG NHẠC TỪ GITHUB ============
         function initMusic() {
             const bgMusic = document.getElementById('bgMusic');
-            // Sử dụng link trực tiếp từ GitHub của bạn
-            const githubMusicURL = "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20LYRICS%20VIDEO.mp3";
+            const playPauseIcon = document.getElementById('playPauseIcon');
+            const currentSongElement = document.getElementById('currentSong');
             
+            // LINK NHẠC CỦA BẠN - ĐÃ SỬA CHÍNH XÁC!
+            // CÓ 2 KHOẢNG TRẮNG giữa KARIK và LYRICS
+            const githubMusicURL = "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3";
+            
+            console.log("🔊 Đang tải nhạc từ GitHub:", githubMusicURL);
+            
+            // Đặt nguồn nhạc
             bgMusic.src = githubMusicURL;
-            bgMusic.volume = 0.5;
-            bgMusic.loop = true;
+            bgMusic.volume = 0.5; // Âm lượng 50%
+            bgMusic.loop = true; // Lặp lại
             
-            // Thử phát nhạc (yêu cầu user tương tác trước)
-            document.addEventListener('click', function initPlayMusic() {
+            // Hiển thị tên bài hát
+            currentSongElement.textContent = "LAN CUỐI - KARIK";
+            
+            // === SỰ KIỆN KIỂM TRA NHẠC ===
+            
+            // 1. Khi nhạc bị lỗi
+            bgMusic.addEventListener('error', function(e) {
+                console.error("❌ LỖI NHẠC:", bgMusic.error);
+                console.error("Chi tiết:", e);
+                
+                showNotification("❌ Không thể tải nhạc từ GitHub", "error");
+                showNotification("📢 Mở Console (F12) để xem lỗi chi tiết", "warning");
+                
+                // Thử link backup với raw.githack.com
+                const backupURL = "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3";
+                console.log("🔄 Thử nhạc backup:", backupURL);
+                bgMusic.src = backupURL;
+                currentSongElement.textContent = "LAN CUỐI - KARIK (Backup)";
+            });
+            
+            // 2. Khi nhạc có thể phát được
+            bgMusic.addEventListener('canplay', function() {
+                console.log("✅ SẴN SÀNG PHÁT NHẠC!");
+                showNotification("🎵 Nhạc đã sẵn sàng! Nhấn nút Play", "success");
+            });
+            
+            // 3. Khi đã tải xong dữ liệu nhạc
+            bgMusic.addEventListener('loadeddata', function() {
+                console.log("📊 Đã tải dữ liệu nhạc");
+                if (bgMusic.duration) {
+                    console.log("⏱️ Thời lượng:", bgMusic.duration, "giây");
+                }
+            });
+            
+            // 4. Khi bắt đầu phát nhạc
+            bgMusic.addEventListener('play', function() {
+                console.log("▶️ ĐANG PHÁT NHẠC");
+                isMusicPlaying = true;
+                playPauseIcon.className = 'fas fa-pause';
+            });
+            
+            // 5. Khi tạm dừng nhạc
+            bgMusic.addEventListener('pause', function() {
+                console.log("⏸️ ĐÃ TẠM DỪNG NHẠC");
+                isMusicPlaying = false;
+                playPauseIcon.className = 'fas fa-play';
+            });
+            
+            // === TỰ ĐỘNG PHÁT KHI USER CLICK ===
+            
+            // Trình duyệt yêu cầu user phải tương tác trước khi phát nhạc
+            function tryAutoPlay() {
                 if (!isMusicPlaying) {
                     bgMusic.play().then(() => {
-                        isMusicPlaying = true;
-                        document.getElementById('playPauseIcon').className = 'fas fa-pause';
-                    }).catch(e => {
-                        console.log("Cần user tương tác để phát nhạc");
+                        console.log("🎉 TỰ ĐỘNG PHÁT NHẠC THÀNH CÔNG!");
+                        showNotification("🎶 Nhạc nền đang phát!", "success");
+                    }).catch(error => {
+                        console.log("🖱️ Chờ user click để phát nhạc...");
                     });
-                    document.removeEventListener('click', initPlayMusic);
                 }
-            }, { once: true });
+            }
+            
+            // Thử phát sau 2 giây
+            setTimeout(tryAutoPlay, 2000);
+            
+            // Khi user click bất kỳ đâu trên trang
+            document.addEventListener('click', function firstClick() {
+                tryAutoPlay();
+                // Chỉ cần click 1 lần
+                document.removeEventListener('click', firstClick);
+            });
+            
+            // Khi user nhấn nút Play trong panel
+            document.getElementById('playPauseBtn').addEventListener('click', tryAutoPlay);
+        }
+
+        // ============ KIỂM TRA LINK NHẠC ============
+        function testMusicLink() {
+            console.log("🔍 KIỂM TRA LINK NHẠC...");
+            
+            // Test cả 2 link
+            const testURLs = [
+                "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3",
+                "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3"
+            ];
+            
+            let allFailed = true;
+            
+            testURLs.forEach((url, index) => {
+                const testAudio = new Audio();
+                testAudio.src = url;
+                
+                testAudio.addEventListener('error', function() {
+                    console.error(`🚫 Link ${index + 1} không hoạt động:`, url);
+                });
+                
+                testAudio.addEventListener('canplay', function() {
+                    console.log(`✅ Link ${index + 1} HOẠT ĐỘNG:`, url);
+                    console.log("Thời lượng:", testAudio.duration, "giây");
+                    allFailed = false;
+                });
+                
+                testAudio.load();
+            });
+            
+            setTimeout(() => {
+                if (allFailed) {
+                    console.error("❌ TẤT CẢ LINK ĐỀU KHÔNG HOẠT ĐỘNG!");
+                    console.error("Hãy kiểm tra:");
+                    console.error("1. File có tồn tại trên GitHub không?");
+                    console.error("2. Tên file có đúng không?");
+                    console.error("3. File có public không?");
+                    showNotification("❌ Tất cả link nhạc đều không hoạt động", "error");
+                }
+            }, 3000);
         }
 
         function toggleMusic() {
             const bgMusic = document.getElementById('bgMusic');
             const playPauseIcon = document.getElementById('playPauseIcon');
             
+            console.log("🎛️ Nhấn nút Play/Pause. Trạng thái hiện tại:", isMusicPlaying ? "Đang phát" : "Đang dừng");
+            
             if (isMusicPlaying) {
+                // Nếu đang phát -> tạm dừng
                 bgMusic.pause();
-                playPauseIcon.className = 'fas fa-play';
-                isMusicPlaying = false;
+                console.log("⏸️ Đã tạm dừng nhạc");
+                showNotification("⏸️ Nhạc đã tạm dừng", "info");
             } else {
+                // Nếu đang dừng -> phát
                 bgMusic.play().then(() => {
-                    playPauseIcon.className = 'fas fa-pause';
-                    isMusicPlaying = true;
+                    console.log("▶️ Đang phát nhạc");
+                    showNotification("▶️ Nhạc đang phát", "success");
                 }).catch(error => {
-                    showNotification('Không thể phát nhạc', 'error');
+                    console.error("❌ Lỗi khi phát nhạc:", error);
+                    
+                    // Thử các giải pháp khác
+                    showNotification("🔄 Đang thử tải lại nhạc...", "warning");
+                    
+                    // Giải pháp 1: Thử load lại
+                    bgMusic.load();
+                    setTimeout(() => {
+                        bgMusic.play().catch(e => {
+                            console.error("Vẫn lỗi:", e);
+                            
+                            // Giải pháp 2: Dùng nhạc backup
+                            showNotification("📻 Chuyển sang nhạc Giáng Sinh", "info");
+                            bgMusic.src = "https://assets.mixkit.co/music/preview/mixkit-jingle-bells-311.mp3";
+                            document.getElementById('currentSong').textContent = "Jingle Bells (Backup)";
+                            bgMusic.play();
+                        });
+                    }, 1000);
                 });
             }
         }
@@ -1436,12 +1572,15 @@
             bgMusic.currentTime = 0;
             document.getElementById('playPauseIcon').className = 'fas fa-play';
             isMusicPlaying = false;
+            console.log("⏹️ Đã dừng nhạc hoàn toàn");
+            showNotification("⏹️ Đã dừng nhạc", "info");
         }
 
         function changeVolume(value) {
             const bgMusic = document.getElementById('bgMusic');
             bgMusic.volume = value / 100;
             document.getElementById('volumeValue').textContent = value + '%';
+            console.log("🔊 Âm lượng:", value + '%');
         }
 
         function toggleMute() {
@@ -1456,11 +1595,13 @@
                 muteBtn.classList.add('muted');
                 muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
                 soundStatus.textContent = 'Âm thanh: Tắt';
+                console.log("🔇 Đã tắt tiếng");
                 showNotification('🔇 Âm thanh đã tắt', 'info');
             } else {
                 muteBtn.classList.remove('muted');
                 muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
                 soundStatus.textContent = 'Âm thanh: Bật';
+                console.log("🔊 Đã bật tiếng");
                 showNotification('🔊 Âm thanh đã bật', 'success');
             }
         }
@@ -1583,6 +1724,14 @@
 
             document.getElementById('volumeSlider').addEventListener('input', function(e) {
                 changeVolume(this.value);
+                e.stopPropagation();
+            });
+
+            // Nút test nhạc
+            document.getElementById('testMusicBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                testMusicLink();
+                showNotification("🔍 Đang kiểm tra link nhạc... Xem Console!", "info");
                 e.stopPropagation();
             });
 
