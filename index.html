@@ -6,7 +6,6 @@
     <title>🎄 DearGift - Giáng Sinh Yêu Thương</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Tất cả CSS từ code gốc giữ nguyên */
         * {
             margin: 0;
             padding: 0;
@@ -64,7 +63,7 @@
             pointer-events: none;
             z-index: 10;
             transform-origin: center;
-            filter: drop-shadow(0 0 2px rgba(135, 206, 235, 0.6));
+            filter: drop-shadow(0 0 2px rgba(30, 144, 255, 0.6));
             will-change: transform, opacity;
         }
 
@@ -82,9 +81,9 @@
 
         .snowflake-explosion-branch {
             position: absolute;
-            background: linear-gradient(to right, rgba(173, 216, 230, 0.95), #87CEEB, rgba(173, 216, 230, 0.95));
+            background: linear-gradient(to right, #4682B4, #1E90FF, #4682B4); /* Xanh dương đậm hơn */
             border-radius: 0.5px;
-            box-shadow: 0 0 2px rgba(135, 206, 235, 0.6);
+            box-shadow: 0 0 2px rgba(30, 144, 255, 0.7);
             will-change: transform;
         }
 
@@ -98,8 +97,8 @@
         .explosion-particle {
             position: absolute;
             border-radius: 50%;
-            background: linear-gradient(135deg, #87CEEB, #B0E0E6, #ADD8E6);
-            box-shadow: 0 0 3px rgba(135, 206, 235, 0.6);
+            background: linear-gradient(135deg, #1E90FF, #87CEEB, #FFFFFF);
+            box-shadow: 0 0 3px rgba(30, 144, 255, 0.6);
             will-change: transform, opacity;
         }
 
@@ -108,8 +107,8 @@
             pointer-events: none;
             z-index: 15;
             border-radius: 50%;
-            background: linear-gradient(180deg, rgba(173, 216, 230, 0.9), rgba(224, 255, 255, 0.7));
-            box-shadow: 0 0 4px rgba(135, 206, 235, 0.5);
+            background: linear-gradient(180deg, rgba(30, 144, 255, 0.9), rgba(255, 255, 255, 0.7));
+            box-shadow: 0 0 4px rgba(30, 144, 255, 0.5);
             will-change: transform, opacity;
         }
 
@@ -184,7 +183,7 @@
 
         .snowflake-counter-label {
             font-size: 0.75rem;
-            color: #87CEEB;
+            color: #1E90FF; /* Xanh dương */
             margin-bottom: 2px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -198,15 +197,15 @@
             font-weight: 700;
             color: #fff;
             text-shadow: 
-                0 0 4px #87CEEB,
-                0 0 8px #87CEEB;
+                0 0 4px #1E90FF,
+                0 0 8px #1E90FF;
             transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: transform;
         }
 
         .snowflake-counter-value.animate {
             transform: scale(1.08);
-            color: #87CEEB;
+            color: #1E90FF;
         }
 
         /* ===== END CSS HIỆU ỨNG BÔNG TUYẾT NỔ ===== */
@@ -268,7 +267,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: rgba(173, 216, 230, 0.8);
+            background: rgba(30, 144, 255, 0.8); /* Xanh dương */
             pointer-events: none;
             z-index: 10000;
             animation: ripple 0.6s linear;
@@ -1533,7 +1532,6 @@
         // Hàm xử lý click cho web Noel (giữ nguyên các sự kiện cũ)
         function handleNoelClick(event) {
             // Các sự kiện click khác của web Noel sẽ được xử lý ở đây
-            // (giữ nguyên logic từ web Noel gốc)
         }
 
         // Hàm cập nhật bộ đếm
@@ -1548,13 +1546,13 @@
             // Thay đổi màu sắc dựa trên số lần click
             if (clickCount >= 2 && clickCount <= 3) {
                 clickCountElement.style.textShadow = 
-                    '0 0 4px #87CEEB, 0 0 8px #87CEEB';
+                    '0 0 4px #1E90FF, 0 0 8px #1E90FF';
             } else if (clickCount > 3) {
                 clickCountElement.style.textShadow = 
-                    '0 0 4px #B0E0E6, 0 0 8px #B0E0E6';
+                    '0 0 4px #4682B4, 0 0 8px #4682B4';
             } else {
                 clickCountElement.style.textShadow = 
-                    '0 0 4px #87CEEB, 0 0 8px #87CEEB';
+                    '0 0 4px #1E90FF, 0 0 8px #1E90FF';
             }
         }
 
@@ -1622,7 +1620,7 @@
                     snowflakeInner.appendChild(mainBranch);
                 }
                 
-                // Tạo vòng tròn trung tâm - MÀU XANH DƯƠNG
+                // Tạo vòng tròn trung tâm - MÀU XANH DƯƠNG ĐẬM HƠN
                 const centerCircle = document.createElement('div');
                 centerCircle.className = 'snowflake-explosion-branch';
                 centerCircle.style.width = `${snowflakeSize * 0.06}px`;
@@ -1630,8 +1628,8 @@
                 centerCircle.style.borderRadius = '50%';
                 centerCircle.style.left = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
                 centerCircle.style.top = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
-                centerCircle.style.background = 'radial-gradient(circle, #B0E0E6, #87CEEB)';
-                centerCircle.style.boxShadow = '0 0 6px rgba(135, 206, 235, 0.8)';
+                centerCircle.style.background = 'radial-gradient(circle, #1E90FF, #4682B4)';
+                centerCircle.style.boxShadow = '0 0 6px rgba(30, 144, 255, 0.9)';
                 
                 snowflakeInner.appendChild(centerCircle);
                 
@@ -1685,9 +1683,9 @@
                 explosion.style.left = `${centerX}px`;
                 explosion.style.top = `${centerY}px`;
                 
-                // Tạo các mảnh vỡ bay ra xung quanh - MÀU XANH DƯƠNG
+                // Tạo các mảnh vỡ bay ra xung quanh - MÀU XANH DƯƠNG, XANH DƯƠNG NHẠT, TRẮNG
                 const particleCount = 12;
-                const colors = ['#87CEEB', '#B0E0E6', '#ADD8E6', '#E0FFFF'];
+                const colors = ['#1E90FF', '#87CEEB', '#B0E0E6', '#FFFFFF', '#ADD8E6', '#E0FFFF']; // Xanh dương, xanh nhạt, trắng
                 
                 for (let i = 0; i < particleCount; i++) {
                     const particle = document.createElement('div');
@@ -1756,15 +1754,16 @@
             });
         }
 
-        // Hàm tạo hạt rơi - MÀU XANH DƯƠNG
+        // Hàm tạo hạt rơi - MÀU XANH DƯƠNG, XANH NHẠT, TRẮNG
         function createFallingParticles(centerX, centerY) {
             const fallingParticleCount = 15;
             const colors = [
-                'rgba(135, 206, 235, 0.9)',    // SkyBlue
-                'rgba(176, 224, 230, 0.8)',    // PowderBlue
-                'rgba(173, 216, 230, 0.8)',    // LightBlue
-                'rgba(224, 255, 255, 0.8)',    // LightCyan
-                'rgba(240, 248, 255, 0.8)'     // AliceBlue
+                'rgba(30, 144, 255, 0.9)',    // DodgerBlue - Xanh dương
+                'rgba(135, 206, 235, 0.8)',   // SkyBlue - Xanh dương nhạt
+                'rgba(176, 224, 230, 0.8)',   // PowderBlue - Xanh dương rất nhạt
+                'rgba(255, 255, 255, 0.8)',   // White - Trắng
+                'rgba(173, 216, 230, 0.8)',   // LightBlue - Xanh dương nhạt
+                'rgba(224, 255, 255, 0.8)'    // LightCyan - Xanh lơ nhạt
             ];
             
             for (let i = 0; i < fallingParticleCount; i++) {
@@ -1912,11 +1911,6 @@
                 attributeFilter: ['class']
             });
         });
-
-        // ============ CÁC HÀM CỦA WEB NOEL (GIỮ NGUYÊN) ============
-        // [Tất cả các hàm còn lại của web Noel giữ nguyên từ code gốc]
-        // Bao gồm: initAudioContext, initMusic, createSnowflakes, 
-        // createChristmasDecorations, setupEventListeners, v.v...
 
         // ===== KHỞI TẠO AUDIO CONTEXT =====
         function initAudioContext() {
