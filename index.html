@@ -64,7 +64,7 @@
             pointer-events: none;
             z-index: 10;
             transform-origin: center;
-            filter: drop-shadow(0 0 2px rgba(224, 247, 255, 0.5));
+            filter: drop-shadow(0 0 2px rgba(135, 206, 235, 0.6));
             will-change: transform, opacity;
         }
 
@@ -82,9 +82,9 @@
 
         .snowflake-explosion-branch {
             position: absolute;
-            background: linear-gradient(to right, rgba(224, 247, 255, 0.95), #ffffff, rgba(224, 247, 255, 0.95));
+            background: linear-gradient(to right, rgba(173, 216, 230, 0.95), #87CEEB, rgba(173, 216, 230, 0.95));
             border-radius: 0.5px;
-            box-shadow: 0 0 2px rgba(224, 247, 255, 0.4);
+            box-shadow: 0 0 2px rgba(135, 206, 235, 0.6);
             will-change: transform;
         }
 
@@ -98,8 +98,8 @@
         .explosion-particle {
             position: absolute;
             border-radius: 50%;
-            background: linear-gradient(135deg, #a8edea, #fed6e3, #c2e9fb);
-            box-shadow: 0 0 3px rgba(168, 237, 234, 0.4);
+            background: linear-gradient(135deg, #87CEEB, #B0E0E6, #ADD8E6);
+            box-shadow: 0 0 3px rgba(135, 206, 235, 0.6);
             will-change: transform, opacity;
         }
 
@@ -108,8 +108,8 @@
             pointer-events: none;
             z-index: 15;
             border-radius: 50%;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(168, 237, 234, 0.7));
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+            background: linear-gradient(180deg, rgba(173, 216, 230, 0.9), rgba(224, 255, 255, 0.7));
+            box-shadow: 0 0 4px rgba(135, 206, 235, 0.5);
             will-change: transform, opacity;
         }
 
@@ -184,7 +184,7 @@
 
         .snowflake-counter-label {
             font-size: 0.75rem;
-            color: #a8edea;
+            color: #87CEEB;
             margin-bottom: 2px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -198,15 +198,15 @@
             font-weight: 700;
             color: #fff;
             text-shadow: 
-                0 0 4px #00ffff,
-                0 0 8px #00ffff;
+                0 0 4px #87CEEB,
+                0 0 8px #87CEEB;
             transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: transform;
         }
 
         .snowflake-counter-value.animate {
             transform: scale(1.08);
-            color: #ff00ff;
+            color: #87CEEB;
         }
 
         /* ===== END CSS HIỆU ỨNG BÔNG TUYẾT NỔ ===== */
@@ -268,7 +268,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(173, 216, 230, 0.8);
             pointer-events: none;
             z-index: 10000;
             animation: ripple 0.6s linear;
@@ -1548,13 +1548,13 @@
             // Thay đổi màu sắc dựa trên số lần click
             if (clickCount >= 2 && clickCount <= 3) {
                 clickCountElement.style.textShadow = 
-                    '0 0 4px #ff00ff, 0 0 8px #ff00ff';
+                    '0 0 4px #87CEEB, 0 0 8px #87CEEB';
             } else if (clickCount > 3) {
                 clickCountElement.style.textShadow = 
-                    '0 0 4px #ffff00, 0 0 8px #ffff00';
+                    '0 0 4px #B0E0E6, 0 0 8px #B0E0E6';
             } else {
                 clickCountElement.style.textShadow = 
-                    '0 0 4px #00ffff, 0 0 8px #00ffff';
+                    '0 0 4px #87CEEB, 0 0 8px #87CEEB';
             }
         }
 
@@ -1622,7 +1622,7 @@
                     snowflakeInner.appendChild(mainBranch);
                 }
                 
-                // Tạo vòng tròn trung tâm
+                // Tạo vòng tròn trung tâm - MÀU XANH DƯƠNG
                 const centerCircle = document.createElement('div');
                 centerCircle.className = 'snowflake-explosion-branch';
                 centerCircle.style.width = `${snowflakeSize * 0.06}px`;
@@ -1630,8 +1630,8 @@
                 centerCircle.style.borderRadius = '50%';
                 centerCircle.style.left = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
                 centerCircle.style.top = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
-                centerCircle.style.background = 'radial-gradient(circle, #ffffff, #a8edea)';
-                centerCircle.style.boxShadow = '0 0 6px rgba(168, 237, 234, 0.6)';
+                centerCircle.style.background = 'radial-gradient(circle, #B0E0E6, #87CEEB)';
+                centerCircle.style.boxShadow = '0 0 6px rgba(135, 206, 235, 0.8)';
                 
                 snowflakeInner.appendChild(centerCircle);
                 
@@ -1685,9 +1685,9 @@
                 explosion.style.left = `${centerX}px`;
                 explosion.style.top = `${centerY}px`;
                 
-                // Tạo các mảnh vỡ bay ra xung quanh
+                // Tạo các mảnh vỡ bay ra xung quanh - MÀU XANH DƯƠNG
                 const particleCount = 12;
-                const colors = ['#ffffff', '#a8edea', '#fed6e3'];
+                const colors = ['#87CEEB', '#B0E0E6', '#ADD8E6', '#E0FFFF'];
                 
                 for (let i = 0; i < particleCount; i++) {
                     const particle = document.createElement('div');
@@ -1756,14 +1756,15 @@
             });
         }
 
-        // Hàm tạo hạt rơi
+        // Hàm tạo hạt rơi - MÀU XANH DƯƠNG
         function createFallingParticles(centerX, centerY) {
             const fallingParticleCount = 15;
             const colors = [
-                'rgba(255, 255, 255, 0.9)',
-                'rgba(168, 237, 234, 0.8)',
-                'rgba(254, 214, 227, 0.8)',
-                'rgba(194, 233, 251, 0.8)'
+                'rgba(135, 206, 235, 0.9)',    // SkyBlue
+                'rgba(176, 224, 230, 0.8)',    // PowderBlue
+                'rgba(173, 216, 230, 0.8)',    // LightBlue
+                'rgba(224, 255, 255, 0.8)',    // LightCyan
+                'rgba(240, 248, 255, 0.8)'     // AliceBlue
             ];
             
             for (let i = 0; i < fallingParticleCount; i++) {
