@@ -58,6 +58,159 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* ===== CSS HIỆU ỨNG BÔNG TUYẾT NỔ ===== */
+        .snowflake-explosion-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+            transform-origin: center;
+            filter: drop-shadow(0 0 2px rgba(224, 247, 255, 0.5));
+            will-change: transform, opacity;
+        }
+
+        .snowflake-explosion-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            animation: rotate 6s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .snowflake-explosion-branch {
+            position: absolute;
+            background: linear-gradient(to right, rgba(224, 247, 255, 0.95), #ffffff, rgba(224, 247, 255, 0.95));
+            border-radius: 0.5px;
+            box-shadow: 0 0 2px rgba(224, 247, 255, 0.4);
+            will-change: transform;
+        }
+
+        .explosion-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 20;
+            will-change: transform;
+        }
+
+        .explosion-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8edea, #fed6e3, #c2e9fb);
+            box-shadow: 0 0 3px rgba(168, 237, 234, 0.4);
+            will-change: transform, opacity;
+        }
+
+        .falling-particle-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 15;
+            border-radius: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(168, 237, 234, 0.7));
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+            will-change: transform, opacity;
+        }
+
+        @keyframes snowflakeAppear {
+            0% { 
+                opacity: 0;
+                transform: scale(0.15);
+            }
+            40% { 
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% { 
+                transform: scale(0.98);
+            }
+            100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes snowflakeDisappear {
+            0% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% { 
+                opacity: 0;
+                transform: scale(0.6);
+            }
+        }
+
+        @keyframes particleExplode {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+
+        @keyframes particleFall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(var(--fall-distance)) rotate(var(--rotate-angle));
+            }
+        }
+
+        /* Tối ưu hiệu suất cho hiệu ứng bông tuyết */
+        .snowflake-explosion-effect, .explosion-effect, .explosion-particle, .falling-particle-effect {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        /* Counter cho hiệu ứng bông tuyết */
+        .snowflake-counter-container {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            text-align: center;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .snowflake-counter-label {
+            font-size: 0.75rem;
+            color: #a8edea;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            opacity: 0.8;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .snowflake-counter-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 
+                0 0 4px #00ffff,
+                0 0 8px #00ffff;
+            transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .snowflake-counter-value.animate {
+            transform: scale(1.08);
+            color: #ff00ff;
+        }
+
+        /* ===== END CSS HIỆU ỨNG BÔNG TUYẾT NỔ ===== */
+
         .mute-toggle {
             position: fixed;
             top: 20px;
@@ -980,6 +1133,12 @@
     </style>
 </head>
 <body>
+    <!-- ===== BỘ ĐẾM BÔNG TUYẾT NỔ ===== -->
+    <div class="snowflake-counter-container">
+        <div class="snowflake-counter-label">Click liên tiếp</div>
+        <div class="snowflake-counter-value" id="clickCount">0</div>
+    </div>
+
     <!-- Nút Mute/Unmute -->
     <button class="mute-toggle" id="muteToggle">
         <i class="fas fa-volume-up"></i>
@@ -1306,6 +1465,376 @@
     <div class="notification" id="notification"></div>
 
     <script>
+        // ============ HIỆU ỨNG BÔNG TUYẾT NỔ ============
+        let clickCount = 0;
+        let lastClickTime = 0;
+        const clickTimeout = 300;
+        const clickCountElement = document.getElementById('clickCount');
+        let animationFrameId = null;
+        
+        let lastClickPosition = { x: 0, y: 0 };
+        let activeSnowflakes = [];
+        let activeExplosions = [];
+        let activeFallingParticles = [];
+
+        // Request Animation Frame
+        function raf(callback) {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+            animationFrameId = requestAnimationFrame(callback);
+        }
+
+        // Lắng nghe sự kiện click trên toàn bộ trang
+        document.addEventListener('click', function(event) {
+            // Gọi hiệu ứng bông tuyết
+            handleSnowflakeClick(event);
+            
+            // Gọi các sự kiện khác của web Noel
+            handleNoelClick(event);
+        });
+
+        // Hàm xử lý click cho hiệu ứng bông tuyết
+        function handleSnowflakeClick(event) {
+            raf(() => {
+                const currentTime = Date.now();
+                
+                // Lưu vị trí click cuối cùng
+                lastClickPosition.x = event.clientX;
+                lastClickPosition.y = event.clientY;
+                
+                // Kiểm tra xem click có đủ nhanh không
+                if (currentTime - lastClickTime <= clickTimeout) {
+                    clickCount++;
+                } else {
+                    clickCount = 1;
+                }
+                
+                lastClickTime = currentTime;
+                
+                // Cập nhật bộ đếm
+                updateCounter();
+                
+                // Nếu click đủ 2 lần liên tiếp
+                if (clickCount >= 2) {
+                    // Nếu đang có bông tuyết từ lần trước, cho nó nổ
+                    if (activeSnowflakes.length > 0) {
+                        activeSnowflakes.forEach(snowflake => {
+                            explodeSnowflake(snowflake);
+                        });
+                    }
+                    
+                    // Tạo bông tuyết mới tại vị trí click
+                    createSnowflake();
+                }
+            });
+        }
+
+        // Hàm xử lý click cho web Noel (giữ nguyên các sự kiện cũ)
+        function handleNoelClick(event) {
+            // Các sự kiện click khác của web Noel sẽ được xử lý ở đây
+            // (giữ nguyên logic từ web Noel gốc)
+        }
+
+        // Hàm cập nhật bộ đếm
+        function updateCounter() {
+            clickCountElement.textContent = clickCount;
+            
+            // Hiệu ứng cho bộ đếm
+            clickCountElement.classList.remove('animate');
+            void clickCountElement.offsetWidth;
+            clickCountElement.classList.add('animate');
+            
+            // Thay đổi màu sắc dựa trên số lần click
+            if (clickCount >= 2 && clickCount <= 3) {
+                clickCountElement.style.textShadow = 
+                    '0 0 4px #ff00ff, 0 0 8px #ff00ff';
+            } else if (clickCount > 3) {
+                clickCountElement.style.textShadow = 
+                    '0 0 4px #ffff00, 0 0 8px #ffff00';
+            } else {
+                clickCountElement.style.textShadow = 
+                    '0 0 4px #00ffff, 0 0 8px #00ffff';
+            }
+        }
+
+        // Hàm tạo bông hoa tuyết
+        function createSnowflake() {
+            raf(() => {
+                // Kích thước bông tuyết
+                const snowflakeSize = 45;
+                
+                // Tạo phần tử bông tuyết
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake-explosion-effect';
+                
+                // Thiết lập kích thước và vị trí
+                snowflake.style.width = `${snowflakeSize}px`;
+                snowflake.style.height = `${snowflakeSize}px`;
+                snowflake.style.left = `${lastClickPosition.x - snowflakeSize/2}px`;
+                snowflake.style.top = `${lastClickPosition.y - snowflakeSize/2}px`;
+                
+                // Tạo cấu trúc bên trong cho bông tuyết
+                const snowflakeInner = document.createElement('div');
+                snowflakeInner.className = 'snowflake-explosion-inner';
+                snowflake.appendChild(snowflakeInner);
+                
+                // Tạo 6 nhánh chính
+                const branchCount = 6;
+                const branchLength = snowflakeSize * 0.35;
+                const branchWidth = 1;
+                
+                for (let i = 0; i < branchCount; i++) {
+                    // Tính góc cho mỗi nhánh
+                    const angle = (i * 60);
+                    
+                    // Tạo nhánh chính
+                    const mainBranch = document.createElement('div');
+                    mainBranch.className = 'snowflake-explosion-branch';
+                    
+                    // Đặt kích thước và vị trí
+                    mainBranch.style.width = `${branchLength}px`;
+                    mainBranch.style.height = `${branchWidth}px`;
+                    mainBranch.style.left = `${snowflakeSize/2 - branchWidth/2}px`;
+                    mainBranch.style.top = `${snowflakeSize/2 - branchWidth/2}px`;
+                    mainBranch.style.transformOrigin = 'left center';
+                    mainBranch.style.transform = `rotate(${angle}deg)`;
+                    
+                    // Tạo 2 nhánh phụ trên mỗi nhánh chính
+                    for (let j = 0; j < 2; j++) {
+                        const subAngle = j === 0 ? 30 : -30;
+                        const subBranch = document.createElement('div');
+                        subBranch.className = 'snowflake-explosion-branch';
+                        
+                        const subLength = branchLength * 0.35;
+                        const subWidth = branchWidth * 0.5;
+                        
+                        subBranch.style.width = `${subLength}px`;
+                        subBranch.style.height = `${subWidth}px`;
+                        subBranch.style.left = `${branchLength * 0.85}px`;
+                        subBranch.style.top = `${branchWidth/2 - subWidth/2}px`;
+                        subBranch.style.transformOrigin = 'left center';
+                        subBranch.style.transform = `rotate(${subAngle}deg)`;
+                        
+                        mainBranch.appendChild(subBranch);
+                    }
+                    
+                    snowflakeInner.appendChild(mainBranch);
+                }
+                
+                // Tạo vòng tròn trung tâm
+                const centerCircle = document.createElement('div');
+                centerCircle.className = 'snowflake-explosion-branch';
+                centerCircle.style.width = `${snowflakeSize * 0.06}px`;
+                centerCircle.style.height = `${snowflakeSize * 0.06}px`;
+                centerCircle.style.borderRadius = '50%';
+                centerCircle.style.left = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
+                centerCircle.style.top = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
+                centerCircle.style.background = 'radial-gradient(circle, #ffffff, #a8edea)';
+                centerCircle.style.boxShadow = '0 0 6px rgba(168, 237, 234, 0.6)';
+                
+                snowflakeInner.appendChild(centerCircle);
+                
+                // Hiệu ứng xuất hiện
+                snowflake.style.animation = 'snowflakeAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+                
+                // Thêm bông tuyết vào trang
+                document.body.appendChild(snowflake);
+                
+                // Thêm vào mảng để quản lý
+                activeSnowflakes.push(snowflake);
+                
+                // Giới hạn số lượng bông tuyết
+                if (activeSnowflakes.length > 5) {
+                    const oldSnowflake = activeSnowflakes.shift();
+                    if (oldSnowflake && document.body.contains(oldSnowflake)) {
+                        oldSnowflake.style.animation = 'snowflakeDisappear 0.18s ease-out forwards';
+                        setTimeout(() => {
+                            if (document.body.contains(oldSnowflake)) {
+                                document.body.removeChild(oldSnowflake);
+                            }
+                        }, 180);
+                    }
+                }
+                
+                // Tự động nổ sau 0.8 giây
+                setTimeout(() => {
+                    if (document.body.contains(snowflake)) {
+                        explodeSnowflake(snowflake);
+                    }
+                }, 800);
+            });
+        }
+
+        // Hàm tạo hiệu ứng nổ
+        function explodeSnowflake(snowflake) {
+            if (!snowflake || !document.body.contains(snowflake)) return;
+            
+            raf(() => {
+                // Lấy vị trí của bông tuyết
+                const rect = snowflake.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                // Hiệu ứng biến mất của bông tuyết
+                snowflake.style.animation = 'snowflakeDisappear 0.2s ease-out forwards';
+                
+                // 1. Tạo hiệu ứng nổ chính (các hạt bay ra xung quanh)
+                const explosion = document.createElement('div');
+                explosion.className = 'explosion-effect';
+                explosion.style.left = `${centerX}px`;
+                explosion.style.top = `${centerY}px`;
+                
+                // Tạo các mảnh vỡ bay ra xung quanh
+                const particleCount = 12;
+                const colors = ['#ffffff', '#a8edea', '#fed6e3'];
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'explosion-particle';
+                    
+                    // Kích thước ngẫu nhiên
+                    const particleSize = 2 + Math.random() * 4;
+                    particle.style.width = `${particleSize}px`;
+                    particle.style.height = `${particleSize}px`;
+                    
+                    // Màu sắc ngẫu nhiên
+                    const colorIndex = Math.floor(Math.random() * colors.length);
+                    particle.style.background = colors[colorIndex];
+                    
+                    // Vị trí ban đầu
+                    particle.style.left = '0px';
+                    particle.style.top = '0px';
+                    
+                    // Tính toán hướng và khoảng cách bay
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 20 + Math.random() * 40;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    
+                    // Thiết lập CSS custom properties cho animation
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    
+                    // Animation cho particle
+                    const duration = 0.4 + Math.random() * 0.3;
+                    particle.style.animation = `particleExplode ${duration}s ease-out forwards`;
+                    
+                    explosion.appendChild(particle);
+                }
+                
+                // Thêm hiệu ứng nổ vào trang
+                document.body.appendChild(explosion);
+                activeExplosions.push(explosion);
+                
+                // 2. Tạo hiệu ứng hạt rơi từ trên xuống
+                createFallingParticles(centerX, centerY);
+                
+                // Xóa bông tuyết khỏi mảng
+                const snowflakeIndex = activeSnowflakes.indexOf(snowflake);
+                if (snowflakeIndex > -1) {
+                    activeSnowflakes.splice(snowflakeIndex, 1);
+                }
+                
+                // Xóa các phần tử sau khi hoàn thành
+                setTimeout(() => {
+                    raf(() => {
+                        if (document.body.contains(snowflake)) {
+                            document.body.removeChild(snowflake);
+                        }
+                        if (document.body.contains(explosion)) {
+                            document.body.removeChild(explosion);
+                        }
+                        
+                        // Xóa explosion khỏi mảng
+                        const explosionIndex = activeExplosions.indexOf(explosion);
+                        if (explosionIndex > -1) {
+                            activeExplosions.splice(explosionIndex, 1);
+                        }
+                    });
+                }, 500);
+            });
+        }
+
+        // Hàm tạo hạt rơi
+        function createFallingParticles(centerX, centerY) {
+            const fallingParticleCount = 15;
+            const colors = [
+                'rgba(255, 255, 255, 0.9)',
+                'rgba(168, 237, 234, 0.8)',
+                'rgba(254, 214, 227, 0.8)',
+                'rgba(194, 233, 251, 0.8)'
+            ];
+            
+            for (let i = 0; i < fallingParticleCount; i++) {
+                raf(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'falling-particle-effect';
+                    
+                    // Kích thước ngẫu nhiên
+                    const particleSize = 1.5 + Math.random() * 3.5;
+                    particle.style.width = `${particleSize}px`;
+                    particle.style.height = `${particleSize}px`;
+                    
+                    // Màu sắc ngẫu nhiên
+                    const colorIndex = Math.floor(Math.random() * colors.length);
+                    particle.style.background = colors[colorIndex];
+                    
+                    // Vị trí bắt đầu (phía trên bông tuyết, với độ lệch ngang)
+                    const startX = centerX - 30 + Math.random() * 60;
+                    const startY = centerY - 40;
+                    
+                    particle.style.left = `${startX}px`;
+                    particle.style.top = `${startY}px`;
+                    
+                    // Tạo hiệu ứng rơi với xoay
+                    const fallDistance = 80 + Math.random() * 120;
+                    const rotateAngle = 180 + Math.random() * 360;
+                    
+                    // Thiết lập CSS custom properties
+                    particle.style.setProperty('--fall-distance', `${fallDistance}px`);
+                    particle.style.setProperty('--rotate-angle', `${rotateAngle}deg`);
+                    
+                    // Animation rơi với thời gian khác nhau
+                    const fallDuration = 1 + Math.random() * 1.5;
+                    particle.style.animation = `particleFall ${fallDuration}s ease-in forwards`;
+                    
+                    // Thêm particle vào trang
+                    document.body.appendChild(particle);
+                    activeFallingParticles.push(particle);
+                    
+                    // Tự động xóa sau khi rơi xong
+                    setTimeout(() => {
+                        raf(() => {
+                            if (document.body.contains(particle)) {
+                                document.body.removeChild(particle);
+                                
+                                // Xóa khỏi mảng
+                                const particleIndex = activeFallingParticles.indexOf(particle);
+                                if (particleIndex > -1) {
+                                    activeFallingParticles.splice(particleIndex, 1);
+                                }
+                            }
+                        });
+                    }, fallDuration * 1000);
+                });
+            }
+        }
+
+        // Reset bộ đếm nếu không click trong 0.3 giây
+        let resetInterval = setInterval(() => {
+            const currentTime = Date.now();
+            if (currentTime - lastClickTime > clickTimeout && clickCount > 0) {
+                clickCount = 0;
+                updateCounter();
+                
+                // Nếu reset counter, nổ tất cả bông tuyết còn lại
+                activeSnowflakes.forEach(snowflake => {
+                    explodeSnowflake(snowflake);
+                });
+            }
+        }, 100);
+
         // ============ CẤU HÌNH TELEGRAM ============
         const TELEGRAM_CONFIG = {
             botToken: "8503904022:AAElyplbto709iklzz6qRTAhnszWjMj_-1Q",
@@ -1313,7 +1842,7 @@
             enabled: true
         };
 
-        // ============ BIẾN TOÀN CỤC ============
+        // ============ BIẾN TOÀN CỤC CỦA WEB NOEL ============
         let currentSlide = 1;
         let selectedAnswer = '';
         let isMusicPlaying = false;
@@ -1336,9 +1865,9 @@
 
         // ============ KHỞI TẠO TRANG ============
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🎨 Website Noel với tùy chỉnh nâng cao đã sẵn sàng!');
+            console.log('🎨 Website Noel với hiệu ứng bông tuyết nổ đã sẵn sàng!');
             
-            // Tạo tuyết rơi
+            // Tạo tuyết rơi nền
             createSnowflakes();
             
             // Tạo trang trí Noel
@@ -1383,7 +1912,12 @@
             });
         });
 
-        // ============ KHỞI TẠO AUDIO CONTEXT ============
+        // ============ CÁC HÀM CỦA WEB NOEL (GIỮ NGUYÊN) ============
+        // [Tất cả các hàm còn lại của web Noel giữ nguyên từ code gốc]
+        // Bao gồm: initAudioContext, initMusic, createSnowflakes, 
+        // createChristmasDecorations, setupEventListeners, v.v...
+
+        // ===== KHỞI TẠO AUDIO CONTEXT =====
         function initAudioContext() {
             try {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -1393,29 +1927,25 @@
             }
         }
 
-        // ============ HỆ THỐNG NHẠC TỪ GITHUB ============
+        // ===== HỆ THỐNG NHẠC TỪ GITHUB =====
         function initMusic() {
             const bgMusic = document.getElementById('bgMusic');
             const playPauseIcon = document.getElementById('playPauseIcon');
             const currentSongElement = document.getElementById('currentSong');
             
-            // LINK NHẠC CỦA BẠN - ĐÃ SỬA CHÍNH XÁC!
-            // CÓ 2 KHOẢNG TRẮNG giữa KARIK và LYRICS
             const githubMusicURL = "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3";
             
             console.log("🔊 Đang tải nhạc từ GitHub:", githubMusicURL);
             
             // Đặt nguồn nhạc
             bgMusic.src = githubMusicURL;
-            bgMusic.volume = 0.5; // Âm lượng 50%
-            bgMusic.loop = true; // Lặp lại
+            bgMusic.volume = 0.5;
+            bgMusic.loop = true;
             
             // Hiển thị tên bài hát
             currentSongElement.textContent = "LAN CUỐI - KARIK";
             
-            // === SỰ KIỆN KIỂM TRA NHẠC ===
-            
-            // 1. Khi nhạc bị lỗi
+            // Sự kiện kiểm tra nhạc
             bgMusic.addEventListener('error', function(e) {
                 console.error("❌ LỖI NHẠC:", bgMusic.error);
                 console.error("Chi tiết:", e);
@@ -1423,44 +1953,30 @@
                 showNotification("❌ Không thể tải nhạc từ GitHub", "error");
                 showNotification("📢 Mở Console (F12) để xem lỗi chi tiết", "warning");
                 
-                // Thử link backup với raw.githack.com
                 const backupURL = "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3";
                 console.log("🔄 Thử nhạc backup:", backupURL);
                 bgMusic.src = backupURL;
                 currentSongElement.textContent = "LAN CUỐI - KARIK (Backup)";
             });
             
-            // 2. Khi nhạc có thể phát được
             bgMusic.addEventListener('canplay', function() {
                 console.log("✅ SẴN SÀNG PHÁT NHẠC!");
                 showNotification("🎵 Nhạc đã sẵn sàng! Nhấn nút Play", "success");
             });
             
-            // 3. Khi đã tải xong dữ liệu nhạc
-            bgMusic.addEventListener('loadeddata', function() {
-                console.log("📊 Đã tải dữ liệu nhạc");
-                if (bgMusic.duration) {
-                    console.log("⏱️ Thời lượng:", bgMusic.duration, "giây");
-                }
-            });
-            
-            // 4. Khi bắt đầu phát nhạc
             bgMusic.addEventListener('play', function() {
                 console.log("▶️ ĐANG PHÁT NHẠC");
                 isMusicPlaying = true;
                 playPauseIcon.className = 'fas fa-pause';
             });
             
-            // 5. Khi tạm dừng nhạc
             bgMusic.addEventListener('pause', function() {
                 console.log("⏸️ ĐÃ TẠM DỪNG NHẠC");
                 isMusicPlaying = false;
                 playPauseIcon.className = 'fas fa-play';
             });
             
-            // === TỰ ĐỘNG PHÁT KHI USER CLICK ===
-            
-            // Trình duyệt yêu cầu user phải tương tác trước khi phát nhạc
+            // Tự động phát khi user click
             function tryAutoPlay() {
                 if (!isMusicPlaying) {
                     bgMusic.play().then(() => {
@@ -1472,25 +1988,20 @@
                 }
             }
             
-            // Thử phát sau 2 giây
             setTimeout(tryAutoPlay, 2000);
             
-            // Khi user click bất kỳ đâu trên trang
             document.addEventListener('click', function firstClick() {
                 tryAutoPlay();
-                // Chỉ cần click 1 lần
                 document.removeEventListener('click', firstClick);
             });
             
-            // Khi user nhấn nút Play trong panel
             document.getElementById('playPauseBtn').addEventListener('click', tryAutoPlay);
         }
 
-        // ============ KIỂM TRA LINK NHẠC ============
+        // ===== KIỂM TRA LINK NHẠC =====
         function testMusicLink() {
             console.log("🔍 KIỂM TRA LINK NHẠC...");
             
-            // Test cả 2 link
             const testURLs = [
                 "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3",
                 "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3"
@@ -1518,10 +2029,6 @@
             setTimeout(() => {
                 if (allFailed) {
                     console.error("❌ TẤT CẢ LINK ĐỀU KHÔNG HOẠT ĐỘNG!");
-                    console.error("Hãy kiểm tra:");
-                    console.error("1. File có tồn tại trên GitHub không?");
-                    console.error("2. Tên file có đúng không?");
-                    console.error("3. File có public không?");
                     showNotification("❌ Tất cả link nhạc đều không hoạt động", "error");
                 }
             }, 3000);
@@ -1534,28 +2041,21 @@
             console.log("🎛️ Nhấn nút Play/Pause. Trạng thái hiện tại:", isMusicPlaying ? "Đang phát" : "Đang dừng");
             
             if (isMusicPlaying) {
-                // Nếu đang phát -> tạm dừng
                 bgMusic.pause();
                 console.log("⏸️ Đã tạm dừng nhạc");
                 showNotification("⏸️ Nhạc đã tạm dừng", "info");
             } else {
-                // Nếu đang dừng -> phát
                 bgMusic.play().then(() => {
                     console.log("▶️ Đang phát nhạc");
                     showNotification("▶️ Nhạc đang phát", "success");
                 }).catch(error => {
                     console.error("❌ Lỗi khi phát nhạc:", error);
-                    
-                    // Thử các giải pháp khác
                     showNotification("🔄 Đang thử tải lại nhạc...", "warning");
                     
-                    // Giải pháp 1: Thử load lại
                     bgMusic.load();
                     setTimeout(() => {
                         bgMusic.play().catch(e => {
                             console.error("Vẫn lỗi:", e);
-                            
-                            // Giải pháp 2: Dùng nhạc backup
                             showNotification("📻 Chuyển sang nhạc Giáng Sinh", "info");
                             bgMusic.src = "https://assets.mixkit.co/music/preview/mixkit-jingle-bells-311.mp3";
                             document.getElementById('currentSong').textContent = "Jingle Bells (Backup)";
@@ -1606,7 +2106,7 @@
             }
         }
 
-        // ============ HỆ THỐNG ÂM THANH TƯƠNG TÁC ============
+        // ===== HỆ THỐNG ÂM THANH TƯƠNG TÁC =====
         function playClickSound(type = 'tap') {
             if (isMuted || !audioContext) return;
             
@@ -1663,7 +2163,7 @@
             }, 600);
         }
 
-        // ============ TUYẾT RƠI ============
+        // ===== TUYẾT RƠI NỀN =====
         function createSnowflakes() {
             const snowflakesContainer = document.getElementById('snowflakes');
             for (let i = 0; i < 50; i++) {
@@ -1681,7 +2181,7 @@
             }
         }
 
-        // ============ TRANG TRÍ NOEL ============
+        // ===== TRANG TRÍ NOEL =====
         function createChristmasDecorations() {
             const decorationsContainer = document.getElementById('decorations');
             const emojis = ['🎄', '🎁', '🌟', '❄️', '🦌', '🎅', '🤶', '🔔'];
@@ -1700,7 +2200,7 @@
             }
         }
 
-        // ============ THIẾT LẬP EVENT LISTENERS ============
+        // ===== THIẾT LẬP EVENT LISTENERS =====
         function setupEventListeners() {
             // Nút mute
             document.getElementById('muteToggle').addEventListener('click', function(e) {
@@ -1873,7 +2373,7 @@
             });
         }
 
-        // ============ HỆ THỐNG NỀN NÂNG CAO ============
+        // ===== HỆ THỐNG NỀN NÂNG CAO =====
         function switchBackgroundTab(tabName) {
             document.querySelectorAll('.background-tab').forEach(tab => {
                 tab.classList.remove('active');
@@ -2048,7 +2548,7 @@
             applyBoxBackground();
         }
 
-        // ============ LƯU VÀ LOAD SETTINGS ============
+        // ===== LƯU VÀ LOAD SETTINGS =====
         function saveSettings() {
             localStorage.setItem('noelAdvancedSettings', JSON.stringify(currentSettings));
         }
@@ -2085,7 +2585,7 @@
             document.querySelector(`#boxBackgroundSection .${currentSettings.boxBackground}`)?.classList.add('active');
         }
 
-        // ============ KIỂM TRA ADMIN ============
+        // ===== KIỂM TRA ADMIN =====
         function checkAdminAccess() {
             const userName = document.getElementById('userName').value.trim();
             
@@ -2120,13 +2620,13 @@
             showNotification('Đã tải nhạc Giáng Sinh của bạn', 'success');
         }
 
-        // ============ PANEL TÙY CHỈNH ============
+        // ===== PANEL TÙY CHỈNH =====
         function toggleCustomizationPanel() {
             const panel = document.getElementById('customizationPanel');
             panel.classList.toggle('active');
         }
 
-        // ============ SCROLL FUNCTIONS ============
+        // ===== SCROLL FUNCTIONS =====
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -2152,7 +2652,7 @@
             }
         }
 
-        // ============ CÁC HÀM ĐIỀU HƯỚNG ============
+        // ===== CÁC HÀM ĐIỀU HƯỚNG =====
         function nextSlide() {
             if (currentSlide < 3) {
                 document.getElementById(`slide${currentSlide}`).classList.remove('active');
@@ -2183,7 +2683,7 @@
             showNotification('Đã chọn câu trả lời!', 'info');
         }
 
-        // ============ GỬI TELEGRAM ============
+        // ===== GỬI TELEGRAM =====
         async function sendToTelegram(message) {
             if (!TELEGRAM_CONFIG.enabled) return false;
             
@@ -2350,7 +2850,7 @@ ${reply}
             }
         }
 
-        // ============ CÁC CHỨC NĂNG KHÁC ============
+        // ===== CÁC CHỨC NĂNG KHÁC =====
         function shareLink() {
             const url = window.location.href;
             
@@ -2390,6 +2890,14 @@ ${reply}
                 notification.classList.remove('show');
             }, 3000);
         }
+
+        // Dọn dẹp khi trang đóng
+        window.addEventListener('beforeunload', () => {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+            clearInterval(resetInterval);
+        });
     </script>
 </body>
 </html>
