@@ -169,44 +169,7 @@
             -webkit-backface-visibility: hidden;
         }
 
-        /* Counter cho hiệu ứng bông tuyết */
-        .snowflake-counter-container {
-            position: fixed;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            text-align: center;
-            will-change: transform;
-            pointer-events: none;
-        }
-
-        .snowflake-counter-label {
-            font-size: 0.75rem;
-            color: #1E90FF; /* Xanh dương */
-            margin-bottom: 2px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 500;
-            opacity: 0.8;
-            text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-        }
-
-        .snowflake-counter-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 
-                0 0 4px #1E90FF,
-                0 0 8px #1E90FF;
-            transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform;
-        }
-
-        .snowflake-counter-value.animate {
-            transform: scale(1.08);
-            color: #1E90FF;
-        }
+        /* ĐÃ XÓA PHẦN COUNTER Ở ĐÂY */
 
         /* ===== END CSS HIỆU ỨNG BÔNG TUYẾT NỔ ===== */
 
@@ -1132,11 +1095,7 @@
     </style>
 </head>
 <body>
-    <!-- ===== BỘ ĐẾM BÔNG TUYẾT NỔ ===== -->
-    <div class="snowflake-counter-container">
-        <div class="snowflake-counter-label">Click liên tiếp</div>
-        <div class="snowflake-counter-value" id="clickCount">0</div>
-    </div>
+    <!-- ĐÃ XÓA BỘ ĐẾM BÔNG TUYẾT NỔ -->
 
     <!-- Nút Mute/Unmute -->
     <button class="mute-toggle" id="muteToggle">
@@ -1465,10 +1424,8 @@
 
     <script>
         // ============ HIỆU ỨNG BÔNG TUYẾT NỔ ============
-        let clickCount = 0;
         let lastClickTime = 0;
         const clickTimeout = 300;
-        const clickCountElement = document.getElementById('clickCount');
         let animationFrameId = null;
         
         let lastClickPosition = { x: 0, y: 0 };
@@ -1504,56 +1461,20 @@
                 
                 // Kiểm tra xem click có đủ nhanh không
                 if (currentTime - lastClickTime <= clickTimeout) {
-                    clickCount++;
+                    // Nếu click đủ nhanh, tạo bông tuyết
+                    createSnowflake();
                 } else {
-                    clickCount = 1;
+                    // Nếu click chậm, vẫn tạo bông tuyết
+                    createSnowflake();
                 }
                 
                 lastClickTime = currentTime;
-                
-                // Cập nhật bộ đếm
-                updateCounter();
-                
-                // Nếu click đủ 2 lần liên tiếp
-                if (clickCount >= 2) {
-                    // Nếu đang có bông tuyết từ lần trước, cho nó nổ
-                    if (activeSnowflakes.length > 0) {
-                        activeSnowflakes.forEach(snowflake => {
-                            explodeSnowflake(snowflake);
-                        });
-                    }
-                    
-                    // Tạo bông tuyết mới tại vị trí click
-                    createSnowflake();
-                }
             });
         }
 
         // Hàm xử lý click cho web Noel (giữ nguyên các sự kiện cũ)
         function handleNoelClick(event) {
             // Các sự kiện click khác của web Noel sẽ được xử lý ở đây
-        }
-
-        // Hàm cập nhật bộ đếm
-        function updateCounter() {
-            clickCountElement.textContent = clickCount;
-            
-            // Hiệu ứng cho bộ đếm
-            clickCountElement.classList.remove('animate');
-            void clickCountElement.offsetWidth;
-            clickCountElement.classList.add('animate');
-            
-            // Thay đổi màu sắc dựa trên số lần click
-            if (clickCount >= 2 && clickCount <= 3) {
-                clickCountElement.style.textShadow = 
-                    '0 0 4px #1E90FF, 0 0 8px #1E90FF';
-            } else if (clickCount > 3) {
-                clickCountElement.style.textShadow = 
-                    '0 0 4px #4682B4, 0 0 8px #4682B4';
-            } else {
-                clickCountElement.style.textShadow = 
-                    '0 0 4px #1E90FF, 0 0 8px #1E90FF';
-            }
         }
 
         // Hàm tạo bông hoa tuyết
@@ -1820,20 +1741,6 @@
                 });
             }
         }
-
-        // Reset bộ đếm nếu không click trong 0.3 giây
-        let resetInterval = setInterval(() => {
-            const currentTime = Date.now();
-            if (currentTime - lastClickTime > clickTimeout && clickCount > 0) {
-                clickCount = 0;
-                updateCounter();
-                
-                // Nếu reset counter, nổ tất cả bông tuyết còn lại
-                activeSnowflakes.forEach(snowflake => {
-                    explodeSnowflake(snowflake);
-                });
-            }
-        }, 100);
 
         // ============ CẤU HÌNH TELEGRAM ============
         const TELEGRAM_CONFIG = {
@@ -2891,7 +2798,6 @@ ${reply}
             if (animationFrameId) {
                 cancelAnimationFrame(animationFrameId);
             }
-            clearInterval(resetInterval);
         });
     </script>
 </body>
