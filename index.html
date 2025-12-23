@@ -245,19 +245,22 @@
             }
         }
 
-        .snowflake {
+        /* Hiệu ứng icon Noel rơi tự do */
+        .falling-icon {
             position: absolute;
-            background: white;
-            border-radius: 50%;
             pointer-events: none;
-            opacity: 0.8;
             z-index: 1;
+            font-size: 24px;
             animation: fall linear infinite;
+            opacity: 0.7;
         }
 
         @keyframes fall {
-            to {
-                transform: translateY(100vh);
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
             }
         }
 
@@ -1096,8 +1099,8 @@
     </button>
     <div class="sound-status" id="soundStatus">Âm thanh: Bật</div>
 
-    <!-- Snowflakes -->
-    <div id="snowflakes"></div>
+    <!-- Vùng cho icon Noel rơi tự do -->
+    <div id="falling-icons"></div>
 
     <!-- Christmas Decorations -->
     <div id="decorations"></div>
@@ -1293,7 +1296,10 @@
                     <p>🎁 Có một món quà Giáng Sinh đặc biệt dành cho bạn...</p>
                     <p>Trong đêm Noel ấm áp này, hãy mở trái tim mình ra 💖</p>
                     <p style="color: #c41e3a; font-weight: 600; margin-top: 10px;">
-                        <i class="fas fa-star"></i> Mùa của yêu thương và tỏ tình <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i> Chúc cậu có một ngày giáng sinh an lành <i class="fas fa-star"></i>
+                    </p>
+                    <p style="margin-top: 15px;">
+                        Có một món quà bất ngờ mà tớ muốn dành tặng cho cậu...
                     </p>
                 </div>
 
@@ -1324,33 +1330,26 @@
                 <h2><i class="fas fa-star"></i> Câu hỏi Giáng Sinh</h2>
                 
                 <div class="message-box" id="messageBox2">
-                    <p style="font-size: 22px; font-weight: 600; color: #c41e3a;">
-                        "Trong mùa Giáng Sinh này, bạn có muốn cùng tôi viết tiếp câu chuyện tình yêu không?" 💘
+                    <p style="font-size: 20px; font-weight: 600; color: #c41e3a; line-height: 1.5;">
+                        "Trước đây có lẽ chỉ vài lời vu vơ với nhau, nhưng ở đây tớ muốn hỏi cậu là liệu cậu có thể để mình được chính thức ở bên cậu và trở thành người yêu của cậu được không?" 💘
                     </p>
-                    <p style="margin-top: 10px; font-style: italic;">
+                    <p style="margin-top: 15px; font-style: italic; color: #666;">
                         🎄 Đây là món quà Noel đặc biệt nhất...
                     </p>
                 </div>
 
-                <div class="response-buttons">
-                    <button class="response-btn yes" data-answer="yes">
-                        <i class="fas fa-heart"></i> Có, tôi đồng ý! 🎁
-                    </button>
-                    <button class="response-btn no" data-answer="no">
-                        <i class="fas fa-snowflake"></i> Không, xin lỗi ❄️
-                    </button>
-                    <button class="response-btn maybe" data-answer="maybe">
-                        <i class="fas fa-thinking"></i> Để tôi suy nghĩ... 🤔
-                    </button>
+                <div style="margin: 20px 0;">
+                    <textarea id="userResponse" placeholder="Hãy viết câu trả lời của cậu ở đây..." maxlength="500" style="height: 150px;"></textarea>
+                    <p style="font-size: 12px; color: #888; text-align: right; margin-top: 5px;">
+                        <span id="charCount">0</span>/500 ký tự
+                    </p>
                 </div>
-
-                <textarea id="userMessage" placeholder="Viết lời nhắn Giáng Sinh cho người gửi... (tuỳ chọn)" maxlength="300"></textarea>
                 
-                <input type="text" id="userName" placeholder="Nhập tên/biệt danh của bạn để nhận bất ngờ 🎁" required>
+                <input type="text" id="userName" placeholder="Nhập tên/biệt danh của bạn 🎁" required>
 
                 <div style="text-align: center; margin: 10px 0;">
                     <p style="font-size: 12px; color: #888;">
-                        <i class="fas fa-snowman"></i> Tên của bạn sẽ là chìa khóa mở điều bất ngờ
+                        <i class="fas fa-snowman"></i> Câu trả lời sẽ được gửi đến tớ
                     </p>
                 </div>
 
@@ -1371,15 +1370,14 @@
                     <i class="fas fa-gift"></i>
                 </div>
                 
-                <h2>Cảm ơn bạn! 🎄</h2>
+                <h2>Cảm ơn cậu! 🎄</h2>
                 
                 <div class="simple-message" id="messageBox3">
                     <p class="highlight-text" id="thankYouMessage">
-                        Cảm ơn bạn đã trả lời trong mùa Giáng Sinh!
+                        Cảm ơn cậu đã cho tớ câu trả lời!
                     </p>
                     <p class="final-message">
-                        Người gửi đã nhận được món quà tinh thần quý giá từ bạn. 
-                        Hy vọng Noel này sẽ thật ấm áp và tràn ngập yêu thương! 💕
+                        Tớ đã nhận món quà lớn nhất của Noel này rồi, chúc cậu có 1 ngày Noel thật vui vẻ, hạnh phúc nha. Tớ có một bất ngờ đã tới nhà cậu rồi đó.
                     </p>
                     
                     <div style="margin: 20px 0; display: flex; justify-content: center; gap: 10px; font-size: 24px;">
@@ -1392,15 +1390,18 @@
                 </div>
 
                 <div class="reply-section">
-                    <h3><i class="fas fa-reply"></i> Gửi lời chúc Giáng Sinh?</h3>
-                    <textarea id="replyMessage" placeholder="Viết lời chúc Noel cho người gửi..."></textarea>
+                    <h3><i class="fas fa-reply"></i> Nếu cậu còn lời với tớ có thể điền ở đây và bấm gửi hoặc nhắn cho tớ</h3>
+                    <textarea id="replyMessage" placeholder="Viết lời nhắn cho tớ..."></textarea>
                     
                     <button id="sendReplyBtn">
-                        <i class="fas fa-share"></i> Gửi lời chúc
+                        <i class="fas fa-share"></i> Gửi lời nhắn
                     </button>
                 </div>
 
                 <div class="final-actions" style="margin-top: 30px;">
+                    <p style="text-align: center; font-size: 18px; color: #c41e3a; font-weight: 600; margin-bottom: 20px;">
+                        Tóm lại chúc cậu có một ngày lễ vui vẻ nha! I Love You 💖
+                    </p>
                     <button id="shareLinkBtn" style="background: #1a472a;">
                         <i class="fas fa-share-alt"></i> Chia sẻ trang Noel
                     </button>
@@ -1735,6 +1736,50 @@
             }
         }
 
+        // ============ TẠO ICON NOEL RƠI TỰ DO ============
+        function createFallingIcons() {
+            const icons = ['🎄', '🎁', '🌟', '❄️', '🦌', '🎅', '🤶', '🔔', '⛄', '✨', '💝', '🧦'];
+            const container = document.getElementById('falling-icons');
+            
+            // Tạo 25 icon rơi
+            for (let i = 0; i < 25; i++) {
+                const icon = document.createElement('div');
+                icon.className = 'falling-icon';
+                icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+                
+                // Kích thước ngẫu nhiên
+                const size = 15 + Math.random() * 25;
+                icon.style.fontSize = `${size}px`;
+                
+                // Vị trí bắt đầu ngẫu nhiên
+                icon.style.left = Math.random() * 100 + '%';
+                icon.style.top = -50 + 'px';
+                
+                // Tốc độ rơi ngẫu nhiên
+                const duration = 5 + Math.random() * 15;
+                icon.style.animationDuration = `${duration}s`;
+                
+                // Độ trễ ngẫu nhiên
+                const delay = Math.random() * 10;
+                icon.style.animationDelay = `${delay}s`;
+                
+                // Độ mờ ngẫu nhiên
+                icon.style.opacity = 0.3 + Math.random() * 0.5;
+                
+                container.appendChild(icon);
+                
+                // Tự động xóa và tạo lại icon khi rơi xong
+                setTimeout(() => {
+                    if (icon.parentNode) {
+                        icon.parentNode.removeChild(icon);
+                    }
+                }, (duration + delay) * 1000);
+            }
+            
+            // Tiếp tục tạo icon mới
+            setTimeout(createFallingIcons, 2000);
+        }
+
         // ============ CẤU HÌNH TELEGRAM ============
         const TELEGRAM_CONFIG = {
             botToken: "8503904022:AAElyplbto709iklzz6qRTAhnszWjMj_-1Q",
@@ -1767,8 +1812,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🎨 Website Noel với hiệu ứng bông tuyết nổ đã sẵn sàng!');
             
-            // Tạo tuyết rơi nền
-            createSnowflakes();
+            // Tạo icon Noel rơi tự do
+            createFallingIcons();
             
             // Tạo trang trí Noel
             createChristmasDecorations();
@@ -1796,6 +1841,14 @@
             
             // Thiết lập sự kiện cho các nút
             setupEventListeners();
+            
+            // Đếm ký tự cho textarea
+            const userResponse = document.getElementById('userResponse');
+            const charCount = document.getElementById('charCount');
+            
+            userResponse.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+            });
             
             // Focus vào ô tên khi vào slide 2
             const observer = new MutationObserver(function(mutations) {
@@ -2064,24 +2117,6 @@
             }, 600);
         }
 
-        // ===== TUYẾT RƠI NỀN =====
-        function createSnowflakes() {
-            const snowflakesContainer = document.getElementById('snowflakes');
-            for (let i = 0; i < 50; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                const size = Math.random() * 5 + 2;
-                snowflake.style.width = size + 'px';
-                snowflake.style.height = size + 'px';
-                snowflake.style.left = Math.random() * 100 + '%';
-                snowflake.style.top = Math.random() * -100 + 'px';
-                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
-                snowflake.style.animationDuration = Math.random() * 5 + 5 + 's';
-                snowflake.style.animationDelay = Math.random() * 5 + 's';
-                snowflakesContainer.appendChild(snowflake);
-            }
-        }
-
         // ===== TRANG TRÍ NOEL =====
         function createChristmasDecorations() {
             const decorationsContainer = document.getElementById('decorations');
@@ -2140,14 +2175,6 @@
             document.getElementById('nextSlideBtn').addEventListener('click', function(e) {
                 playClickSound('button');
                 nextSlide();
-            });
-
-            // Các nút response
-            document.querySelectorAll('.response-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    playClickSound('button');
-                    selectAnswer(this.dataset.answer);
-                });
             });
 
             document.getElementById('submitBtn').addEventListener('click', function(e) {
@@ -2429,7 +2456,7 @@
                     } else {
                         const slide = document.getElementById(`slide${selectedSlideForBg}`);
                         if (slide) {
-                            slide.style.background = `url('${imageUrl}') center/cover no-repeat`;
+                            slide.style.background = `url('${imageUrl}) center/cover no-repeat`;
                             slide.classList.add('custom-bg');
                         }
                     }
@@ -2568,22 +2595,6 @@
             }
         }
 
-        function selectAnswer(answer) {
-            selectedAnswer = answer;
-            
-            document.querySelectorAll('.response-btn').forEach(btn => {
-                btn.style.opacity = '0.6';
-                btn.style.transform = 'scale(0.95)';
-            });
-            
-            const selectedBtn = event.target.closest('button');
-            selectedBtn.style.opacity = '1';
-            selectedBtn.style.transform = 'scale(1.05)';
-            selectedBtn.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
-            
-            showNotification('Đã chọn câu trả lời!', 'info');
-        }
-
         // ===== GỬI TELEGRAM =====
         async function sendToTelegram(message) {
             if (!TELEGRAM_CONFIG.enabled) return false;
@@ -2613,42 +2624,23 @@
             }
         }
 
-        function getAnswerEmoji(answer) {
-            const emojis = {
-                'yes': '💖🎁',
-                'no': '💔❄️',
-                'maybe': '🤔🎄'
-            };
-            return emojis[answer] || '💌';
-        }
-
-        function getAnswerText(answer) {
-            const texts = {
-                'yes': 'CÓ - ĐỒNG Ý! 🎉🎄',
-                'no': 'KHÔNG',
-                'maybe': 'SUY NGHĨ THÊM...'
-            };
-            return texts[answer] || 'Không xác định';
-        }
-
         async function submitResponse() {
             const userName = document.getElementById('userName').value.trim();
-            const message = document.getElementById('userMessage').value.trim();
+            const responseText = document.getElementById('userResponse').value.trim();
             
             if (!userName) {
                 showNotification('Vui lòng nhập tên của bạn!', 'error');
                 return;
             }
             
-            if (!selectedAnswer) {
-                showNotification('Vui lòng chọn câu trả lời!', 'error');
+            if (!responseText) {
+                showNotification('Vui lòng viết câu trả lời!', 'error');
                 return;
             }
             
             const responseData = {
                 userName: userName,
-                answer: selectedAnswer,
-                message: message,
+                answer: responseText,
                 timestamp: new Date().toLocaleString('vi-VN'),
                 theme: 'Noel'
             };
@@ -2662,8 +2654,9 @@
 <b>🎄 CÓ NGƯỜI TRẢ LỜI VÀO GIÁNG SINH!</b>
 
 👤 <b>Tên:</b> ${userName}
-${getAnswerEmoji(selectedAnswer)} <b>Câu trả lời:</b> ${getAnswerText(selectedAnswer)}
-${message ? `📝 <b>Lời nhắn Noel:</b>\n${message}\n` : ''}
+💌 <b>Câu trả lời:</b>
+${responseText}
+
 ⏰ <b>Thời gian:</b> ${responseData.timestamp}
 🎅 <b>Chủ đề:</b> Giáng Sinh Yêu Thương
             `.trim();
@@ -2673,7 +2666,7 @@ ${message ? `📝 <b>Lời nhắn Noel:</b>\n${message}\n` : ''}
             if (telegramSent) {
                 showNotification('🎁 Đã gửi thành công!', 'success');
                 
-                updateThankYouMessage(userName, selectedAnswer, message);
+                updateThankYouMessage(userName, responseText);
                 
                 setTimeout(() => {
                     nextSlide();
@@ -2688,29 +2681,15 @@ ${message ? `📝 <b>Lời nhắn Noel:</b>\n${message}\n` : ''}
             }
         }
 
-        function updateThankYouMessage(userName, answer, extraMessage) {
+        function updateThankYouMessage(userName, responseText) {
             const thankYouMessage = document.getElementById('thankYouMessage');
             
-            let responseText = '';
-            switch(answer) {
-                case 'yes':
-                    responseText = `🎄 Cảm ơn ${userName} đã đồng ý! Noel này thật tuyệt vời!`;
-                    break;
-                case 'no':
-                    responseText = `❄️ Cảm ơn ${userName} đã thành thật trả lời.`;
-                    break;
-                case 'maybe':
-                    responseText = `🎁 Cảm ơn ${userName} đã cân nhắc câu trả lời.`;
-                    break;
-            }
+            thankYouMessage.innerHTML = `Cảm ơn cậu <strong>${userName}</strong> đã cho tớ câu trả lời!`;
             
-            thankYouMessage.innerHTML = responseText;
-            
-            if (extraMessage) {
+            if (responseText) {
                 const finalMessage = document.querySelector('.final-message');
                 finalMessage.innerHTML = `
-                    Với lời nhắn Noel: <em>"${extraMessage}"</em><br><br>
-                    Người gửi đã nhận được món quà tinh thần quý giá từ bạn! 💕
+                    Tớ đã nhận món quà lớn nhất của Noel này rồi, chúc cậu có 1 ngày Noel thật vui vẻ, hạnh phúc nha. Tớ có một bất ngờ đã tới nhà cậu rồi đó.
                 `;
             }
         }
@@ -2724,9 +2703,9 @@ ${message ? `📝 <b>Lời nhắn Noel:</b>\n${message}\n` : ''}
             }
             
             const replyMessage = `
-<b>🎄 LỜI CHÚC NOEL TỪ NGƯỜI TRẢ LỜI:</b>
+<b>🎄 LỜI NHẮN THÊM TỪ NGƯỜI TRẢ LỜI:</b>
 
-📝 <b>Lời chúc:</b>
+📝 <b>Lời nhắn:</b>
 ${reply}
 
 ⏰ <b>Thời gian:</b> ${new Date().toLocaleString('vi-VN')}
@@ -2735,19 +2714,19 @@ ${reply}
             const sent = await sendToTelegram(replyMessage);
             
             if (sent) {
-                showNotification('🎅 Đã gửi lời chúc Noel!', 'success');
+                showNotification('🎅 Đã gửi lời nhắn!', 'success');
                 document.getElementById('replyMessage').value = '';
                 
                 const replySection = document.querySelector('.reply-section');
                 replySection.innerHTML = `
                     <div style="text-align: center; color: #2a9d8f; padding: 20px;">
                         <i class="fas fa-check-circle" style="font-size: 40px;"></i>
-                        <h3>Đã gửi lời chúc!</h3>
-                        <p>Người gửi sẽ rất vui khi nhận được lời chúc Giáng Sinh của bạn</p>
+                        <h3>Đã gửi lời nhắn!</h3>
+                        <p>Tớ đã nhận được lời nhắn thêm của cậu rồi 💖</p>
                     </div>
                 `;
             } else {
-                showNotification('Gửi lời chúc thất bại', 'error');
+                showNotification('Gửi lời nhắn thất bại', 'error');
             }
         }
 
