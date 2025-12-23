@@ -81,7 +81,7 @@
 
         .snowflake-explosion-branch {
             position: absolute;
-            background: linear-gradient(to right, #4682B4, #1E90FF, #4682B4); /* Xanh dương đậm hơn */
+            background: linear-gradient(to right, #4682B4, #1E90FF, #4682B4);
             border-radius: 0.5px;
             box-shadow: 0 0 2px rgba(30, 144, 255, 0.7);
             will-change: transform;
@@ -163,15 +163,10 @@
             }
         }
 
-        /* Tối ưu hiệu suất cho hiệu ứng bông tuyết */
         .snowflake-explosion-effect, .explosion-effect, .explosion-particle, .falling-particle-effect {
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
         }
-
-        /* ĐÃ XÓA PHẦN COUNTER Ở ĐÂY */
-
-        /* ===== END CSS HIỆU ỨNG BÔNG TUYẾT NỔ ===== */
 
         .mute-toggle {
             position: fixed;
@@ -230,7 +225,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: rgba(30, 144, 255, 0.8); /* Xanh dương */
+            background: rgba(30, 144, 255, 0.8);
             pointer-events: none;
             z-index: 10000;
             animation: ripple 0.6s linear;
@@ -1095,8 +1090,6 @@
     </style>
 </head>
 <body>
-    <!-- ĐÃ XÓA BỘ ĐẾM BÔNG TUYẾT NỔ -->
-
     <!-- Nút Mute/Unmute -->
     <button class="mute-toggle" id="muteToggle">
         <i class="fas fa-volume-up"></i>
@@ -1242,12 +1235,12 @@
         </div>
 
         <div class="music-info">
-            <p><i class="fas fa-music"></i> <span id="currentSong">LAN CUỐI - KARIK</span></p>
+            <p><i class="fas fa-video"></i> <span id="currentSong">Noel Video</span></p>
             <p><i class="fas fa-volume-up"></i> Âm lượng: <span id="volumeValue">50%</span></p>
             
-            <!-- THÊM NÚT KIỂM TRA -->
+            <!-- NÚT KIỂM TRA -->
             <button id="testMusicBtn" style="margin-top: 10px; padding: 8px; font-size: 12px; background: #2a9d8f; width: 100%;">
-                <i class="fas fa-bug"></i> Test Nhạc
+                <i class="fas fa-bug"></i> Test Video
             </button>
         </div>
 
@@ -1255,11 +1248,11 @@
         <div class="admin-only" id="adminSection" style="display: none;">
             <h4><i class="fas fa-crown"></i> Quản trị viên</h4>
             
-            <h5><i class="fas fa-music"></i> Tải nhạc mới</h5>
+            <h5><i class="fas fa-video"></i> Tải video mới</h5>
             <div id="customMusicUpload">
-                <input type="file" id="musicUpload" accept="audio/*" style="margin: 10px 0; width: 100%;">
+                <input type="file" id="musicUpload" accept="video/*" style="margin: 10px 0; width: 100%;">
                 <button id="uploadMusicBtn">
-                    <i class="fas fa-upload"></i> Tải nhạc lên
+                    <i class="fas fa-upload"></i> Tải video lên
                 </button>
             </div>
         </div>
@@ -1271,8 +1264,8 @@
         </div>
     </div>
 
-    <!-- Audio Elements -->
-    <audio id="bgMusic" loop></audio>
+    <!-- Video Element thay cho Audio -->
+    <video id="bgMusic" loop style="display: none;"></video>
 
     <div class="container" id="mainContainer">
         <!-- Progress Bar -->
@@ -1606,7 +1599,7 @@
                 
                 // Tạo các mảnh vỡ bay ra xung quanh - MÀU XANH DƯƠNG, XANH DƯƠNG NHẠT, TRẮNG
                 const particleCount = 12;
-                const colors = ['#1E90FF', '#87CEEB', '#B0E0E6', '#FFFFFF', '#ADD8E6', '#E0FFFF']; // Xanh dương, xanh nhạt, trắng
+                const colors = ['#1E90FF', '#87CEEB', '#B0E0E6', '#FFFFFF', '#ADD8E6', '#E0FFFF'];
                 
                 for (let i = 0; i < particleCount; i++) {
                     const particle = document.createElement('div');
@@ -1679,12 +1672,12 @@
         function createFallingParticles(centerX, centerY) {
             const fallingParticleCount = 15;
             const colors = [
-                'rgba(30, 144, 255, 0.9)',    // DodgerBlue - Xanh dương
-                'rgba(135, 206, 235, 0.8)',   // SkyBlue - Xanh dương nhạt
-                'rgba(176, 224, 230, 0.8)',   // PowderBlue - Xanh dương rất nhạt
-                'rgba(255, 255, 255, 0.8)',   // White - Trắng
-                'rgba(173, 216, 230, 0.8)',   // LightBlue - Xanh dương nhạt
-                'rgba(224, 255, 255, 0.8)'    // LightCyan - Xanh lơ nhạt
+                'rgba(30, 144, 255, 0.9)',
+                'rgba(135, 206, 235, 0.8)',
+                'rgba(176, 224, 230, 0.8)',
+                'rgba(255, 255, 255, 0.8)',
+                'rgba(173, 216, 230, 0.8)',
+                'rgba(224, 255, 255, 0.8)'
             ];
             
             for (let i = 0; i < fallingParticleCount; i++) {
@@ -1752,7 +1745,7 @@
         // ============ BIẾN TOÀN CỤC CỦA WEB NOEL ============
         let currentSlide = 1;
         let selectedAnswer = '';
-        let isMusicPlaying = false;
+        let isVideoPlaying = false;
         let selectedSlideForBg = 'all';
         let isAdmin = false;
         const ADMIN_CODE = "namlc1213";
@@ -1780,8 +1773,8 @@
             // Tạo trang trí Noel
             createChristmasDecorations();
             
-            // Khởi tạo nhạc từ GitHub
-            initMusic();
+            // Khởi tạo video từ GitHub
+            initVideo();
             
             // Load settings
             loadSettings();
@@ -1829,63 +1822,63 @@
             }
         }
 
-        // ===== HỆ THỐNG NHẠC TỪ GITHUB =====
-        function initMusic() {
-            const bgMusic = document.getElementById('bgMusic');
+        // ===== HỆ THỐNG VIDEO TỪ GITHUB =====
+        function initVideo() {
+            const bgVideo = document.getElementById('bgMusic');
             const playPauseIcon = document.getElementById('playPauseIcon');
             const currentSongElement = document.getElementById('currentSong');
             
-            const githubMusicURL = "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3";
+            const githubVideoURL = "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4";
             
-            console.log("🔊 Đang tải nhạc từ GitHub:", githubMusicURL);
+            console.log("🎥 Đang tải video từ GitHub:", githubVideoURL);
             
-            // Đặt nguồn nhạc
-            bgMusic.src = githubMusicURL;
-            bgMusic.volume = 0.5;
-            bgMusic.loop = true;
+            // Đặt nguồn video
+            bgVideo.src = githubVideoURL;
+            bgVideo.volume = 0.5;
+            bgVideo.loop = true;
             
-            // Hiển thị tên bài hát
-            currentSongElement.textContent = "LAN CUỐI - KARIK";
+            // Hiển thị tên video
+            currentSongElement.textContent = "Video Noel Giáng Sinh";
             
-            // Sự kiện kiểm tra nhạc
-            bgMusic.addEventListener('error', function(e) {
-                console.error("❌ LỖI NHẠC:", bgMusic.error);
+            // Sự kiện kiểm tra video
+            bgVideo.addEventListener('error', function(e) {
+                console.error("❌ LỖI VIDEO:", bgVideo.error);
                 console.error("Chi tiết:", e);
                 
-                showNotification("❌ Không thể tải nhạc từ GitHub", "error");
+                showNotification("❌ Không thể tải video từ GitHub", "error");
                 showNotification("📢 Mở Console (F12) để xem lỗi chi tiết", "warning");
                 
-                const backupURL = "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3";
-                console.log("🔄 Thử nhạc backup:", backupURL);
-                bgMusic.src = backupURL;
-                currentSongElement.textContent = "LAN CUỐI - KARIK (Backup)";
+                const backupURL = "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4";
+                console.log("🔄 Thử video backup:", backupURL);
+                bgVideo.src = backupURL;
+                currentSongElement.textContent = "Video Noel (Backup)";
             });
             
-            bgMusic.addEventListener('canplay', function() {
-                console.log("✅ SẴN SÀNG PHÁT NHẠC!");
-                showNotification("🎵 Nhạc đã sẵn sàng! Nhấn nút Play", "success");
+            bgVideo.addEventListener('canplay', function() {
+                console.log("✅ SẴN SÀNG PHÁT VIDEO!");
+                showNotification("🎬 Video đã sẵn sàng! Nhấn nút Play", "success");
             });
             
-            bgMusic.addEventListener('play', function() {
-                console.log("▶️ ĐANG PHÁT NHẠC");
-                isMusicPlaying = true;
+            bgVideo.addEventListener('play', function() {
+                console.log("▶️ ĐANG PHÁT VIDEO");
+                isVideoPlaying = true;
                 playPauseIcon.className = 'fas fa-pause';
             });
             
-            bgMusic.addEventListener('pause', function() {
-                console.log("⏸️ ĐÃ TẠM DỪNG NHẠC");
-                isMusicPlaying = false;
+            bgVideo.addEventListener('pause', function() {
+                console.log("⏸️ ĐÃ TẠM DỪNG VIDEO");
+                isVideoPlaying = false;
                 playPauseIcon.className = 'fas fa-play';
             });
             
             // Tự động phát khi user click
             function tryAutoPlay() {
-                if (!isMusicPlaying) {
-                    bgMusic.play().then(() => {
-                        console.log("🎉 TỰ ĐỘNG PHÁT NHẠC THÀNH CÔNG!");
-                        showNotification("🎶 Nhạc nền đang phát!", "success");
+                if (!isVideoPlaying) {
+                    bgVideo.play().then(() => {
+                        console.log("🎉 TỰ ĐỘNG PHÁT VIDEO THÀNH CÔNG!");
+                        showNotification("🎬 Video đang phát!", "success");
                     }).catch(error => {
-                        console.log("🖱️ Chờ user click để phát nhạc...");
+                        console.log("🖱️ Chờ user click để phát video...");
                     });
                 }
             }
@@ -1900,98 +1893,98 @@
             document.getElementById('playPauseBtn').addEventListener('click', tryAutoPlay);
         }
 
-        // ===== KIỂM TRA LINK NHẠC =====
-        function testMusicLink() {
-            console.log("🔍 KIỂM TRA LINK NHẠC...");
+        // ===== KIỂM TRA LINK VIDEO =====
+        function testVideoLink() {
+            console.log("🔍 KIỂM TRA LINK VIDEO...");
             
             const testURLs = [
-                "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3",
-                "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/LAN%20CUOI%20-%20KARIK%20%20LYRICS%20VIDEO.mp3"
+                "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4",
+                "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4"
             ];
             
             let allFailed = true;
             
             testURLs.forEach((url, index) => {
-                const testAudio = new Audio();
-                testAudio.src = url;
+                const testVideo = document.createElement('video');
+                testVideo.src = url;
                 
-                testAudio.addEventListener('error', function() {
+                testVideo.addEventListener('error', function() {
                     console.error(`🚫 Link ${index + 1} không hoạt động:`, url);
                 });
                 
-                testAudio.addEventListener('canplay', function() {
+                testVideo.addEventListener('canplay', function() {
                     console.log(`✅ Link ${index + 1} HOẠT ĐỘNG:`, url);
-                    console.log("Thời lượng:", testAudio.duration, "giây");
+                    console.log("Thời lượng:", testVideo.duration, "giây");
                     allFailed = false;
                 });
                 
-                testAudio.load();
+                testVideo.load();
             });
             
             setTimeout(() => {
                 if (allFailed) {
-                    console.error("❌ TẤT CẢ LINK ĐỀU KHÔNG HOẠT ĐỘNG!");
-                    showNotification("❌ Tất cả link nhạc đều không hoạt động", "error");
+                    console.error("❌ TẤT CẢ LINK VIDEO ĐỀU KHÔNG HOẠT ĐỘNG!");
+                    showNotification("❌ Tất cả link video đều không hoạt động", "error");
                 }
             }, 3000);
         }
 
-        function toggleMusic() {
-            const bgMusic = document.getElementById('bgMusic');
+        function toggleVideo() {
+            const bgVideo = document.getElementById('bgMusic');
             const playPauseIcon = document.getElementById('playPauseIcon');
             
-            console.log("🎛️ Nhấn nút Play/Pause. Trạng thái hiện tại:", isMusicPlaying ? "Đang phát" : "Đang dừng");
+            console.log("🎛️ Nhấn nút Play/Pause. Trạng thái hiện tại:", isVideoPlaying ? "Đang phát" : "Đang dừng");
             
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                console.log("⏸️ Đã tạm dừng nhạc");
-                showNotification("⏸️ Nhạc đã tạm dừng", "info");
+            if (isVideoPlaying) {
+                bgVideo.pause();
+                console.log("⏸️ Đã tạm dừng video");
+                showNotification("⏸️ Video đã tạm dừng", "info");
             } else {
-                bgMusic.play().then(() => {
-                    console.log("▶️ Đang phát nhạc");
-                    showNotification("▶️ Nhạc đang phát", "success");
+                bgVideo.play().then(() => {
+                    console.log("▶️ Đang phát video");
+                    showNotification("▶️ Video đang phát", "success");
                 }).catch(error => {
-                    console.error("❌ Lỗi khi phát nhạc:", error);
-                    showNotification("🔄 Đang thử tải lại nhạc...", "warning");
+                    console.error("❌ Lỗi khi phát video:", error);
+                    showNotification("🔄 Đang thử tải lại video...", "warning");
                     
-                    bgMusic.load();
+                    bgVideo.load();
                     setTimeout(() => {
-                        bgMusic.play().catch(e => {
+                        bgVideo.play().catch(e => {
                             console.error("Vẫn lỗi:", e);
-                            showNotification("📻 Chuyển sang nhạc Giáng Sinh", "info");
-                            bgMusic.src = "https://assets.mixkit.co/music/preview/mixkit-jingle-bells-311.mp3";
-                            document.getElementById('currentSong').textContent = "Jingle Bells (Backup)";
-                            bgMusic.play();
+                            showNotification("📼 Chuyển sang video Giáng Sinh backup", "info");
+                            bgVideo.src = "https://assets.mixkit.co/video/preview/mixkit-christmas-background-32977-large.mp4";
+                            document.getElementById('currentSong').textContent = "Video Noel (Backup)";
+                            bgVideo.play();
                         });
                     }, 1000);
                 });
             }
         }
 
-        function stopMusic() {
-            const bgMusic = document.getElementById('bgMusic');
-            bgMusic.pause();
-            bgMusic.currentTime = 0;
+        function stopVideo() {
+            const bgVideo = document.getElementById('bgMusic');
+            bgVideo.pause();
+            bgVideo.currentTime = 0;
             document.getElementById('playPauseIcon').className = 'fas fa-play';
-            isMusicPlaying = false;
-            console.log("⏹️ Đã dừng nhạc hoàn toàn");
-            showNotification("⏹️ Đã dừng nhạc", "info");
+            isVideoPlaying = false;
+            console.log("⏹️ Đã dừng video hoàn toàn");
+            showNotification("⏹️ Đã dừng video", "info");
         }
 
         function changeVolume(value) {
-            const bgMusic = document.getElementById('bgMusic');
-            bgMusic.volume = value / 100;
+            const bgVideo = document.getElementById('bgMusic');
+            bgVideo.volume = value / 100;
             document.getElementById('volumeValue').textContent = value + '%';
             console.log("🔊 Âm lượng:", value + '%');
         }
 
         function toggleMute() {
-            const bgMusic = document.getElementById('bgMusic');
+            const bgVideo = document.getElementById('bgMusic');
             const muteBtn = document.getElementById('muteToggle');
             const soundStatus = document.getElementById('soundStatus');
             
             isMuted = !isMuted;
-            bgMusic.muted = isMuted;
+            bgVideo.muted = isMuted;
             
             if (isMuted) {
                 muteBtn.classList.add('muted');
@@ -2111,16 +2104,16 @@
                 e.stopPropagation();
             });
 
-            // Music controls
+            // Video controls
             document.getElementById('playPauseBtn').addEventListener('click', function(e) {
                 playClickSound('button');
-                toggleMusic();
+                toggleVideo();
                 e.stopPropagation();
             });
 
             document.getElementById('stopMusicBtn').addEventListener('click', function(e) {
                 playClickSound('button');
-                stopMusic();
+                stopVideo();
                 e.stopPropagation();
             });
 
@@ -2129,11 +2122,11 @@
                 e.stopPropagation();
             });
 
-            // Nút test nhạc
+            // Nút test video
             document.getElementById('testMusicBtn').addEventListener('click', function(e) {
                 playClickSound('button');
-                testMusicLink();
-                showNotification("🔍 Đang kiểm tra link nhạc... Xem Console!", "info");
+                testVideoLink();
+                showNotification("🔍 Đang kiểm tra link video... Xem Console!", "info");
                 e.stopPropagation();
             });
 
@@ -2264,7 +2257,7 @@
 
             document.getElementById('uploadMusicBtn').addEventListener('click', function(e) {
                 playClickSound('button');
-                uploadCustomMusic();
+                uploadCustomVideo();
                 e.stopPropagation();
             });
 
@@ -2499,27 +2492,27 @@
             }
         }
 
-        function uploadCustomMusic() {
+        function uploadCustomVideo() {
             const fileInput = document.getElementById('musicUpload');
             const file = fileInput.files[0];
             
             if (!file) {
-                showNotification('Vui lòng chọn file nhạc', 'error');
+                showNotification('Vui lòng chọn file video', 'error');
                 return;
             }
             
-            if (!file.type.startsWith('audio/')) {
-                showNotification('File phải là file âm thanh', 'error');
+            if (!file.type.startsWith('video/')) {
+                showNotification('File phải là file video', 'error');
                 return;
             }
             
             const url = URL.createObjectURL(file);
-            const bgMusic = document.getElementById('bgMusic');
-            bgMusic.src = url;
-            if (isMusicPlaying) {
-                bgMusic.play();
+            const bgVideo = document.getElementById('bgMusic');
+            bgVideo.src = url;
+            if (isVideoPlaying) {
+                bgVideo.play();
             }
-            showNotification('Đã tải nhạc Giáng Sinh của bạn', 'success');
+            showNotification('Đã tải video Giáng Sinh của bạn', 'success');
         }
 
         // ===== PANEL TÙY CHỈNH =====
