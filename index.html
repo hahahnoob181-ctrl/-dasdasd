@@ -1773,7 +1773,7 @@
             // Tạo trang trí Noel
             createChristmasDecorations();
             
-            // Khởi tạo video từ GitHub
+            // Khởi tạo video từ GitHub với âm lượng gốc cao hơn
             initVideo();
             
             // Load settings
@@ -1832,9 +1832,9 @@
             
             console.log("🎥 Đang tải video từ GitHub:", githubVideoURL);
             
-            // Đặt nguồn video
+            // Đặt nguồn video với âm lượng gốc cao hơn (0.8 thay vì 0.5)
             bgVideo.src = githubVideoURL;
-            bgVideo.volume = 0.5;
+            bgVideo.volume = 0.8; // TĂNG ÂM LƯỢNG GỐC TỪ 0.5 LÊN 0.8 (80%)
             bgVideo.loop = true;
             
             // Hiển thị tên video
@@ -2001,7 +2001,7 @@
             }
         }
 
-        // ===== HỆ THỐNG ÂM THANH TƯƠNG TÁC =====
+        // ===== HỆ THỐNG ÂM THANH TƯƠNG TÁC (GIẢM 15% ÂM LƯỢNG) =====
         function playClickSound(type = 'tap') {
             if (isMuted || !audioContext) return;
             
@@ -2012,25 +2012,31 @@
                 oscillator.connect(gainNode);
                 gainNode.connect(audioContext.destination);
                 
+                // GIẢM ÂM LƯỢNG GỐC ĐI 15%
+                const VOLUME_REDUCTION = 0.85; // Giảm 15%
+                
                 if (type === 'tap') {
                     oscillator.frequency.value = 600;
                     oscillator.type = 'sine';
-                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                    // Áp dụng giảm âm lượng: 0.1 * 0.85 = 0.085
+                    gainNode.gain.setValueAtTime(0.1 * VOLUME_REDUCTION, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01 * VOLUME_REDUCTION, audioContext.currentTime + 0.2);
                     oscillator.start(audioContext.currentTime);
                     oscillator.stop(audioContext.currentTime + 0.2);
                 } else if (type === 'button') {
                     oscillator.frequency.value = 800;
                     oscillator.type = 'sine';
-                    gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+                    // Áp dụng giảm âm lượng: 0.15 * 0.85 = 0.1275
+                    gainNode.gain.setValueAtTime(0.15 * VOLUME_REDUCTION, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01 * VOLUME_REDUCTION, audioContext.currentTime + 0.15);
                     oscillator.start(audioContext.currentTime);
                     oscillator.stop(audioContext.currentTime + 0.15);
                 } else if (type === 'success') {
                     oscillator.frequency.value = 1200;
                     oscillator.type = 'sine';
-                    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                    // Áp dụng giảm âm lượng: 0.2 * 0.85 = 0.17
+                    gainNode.gain.setValueAtTime(0.2 * VOLUME_REDUCTION, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01 * VOLUME_REDUCTION, audioContext.currentTime + 0.3);
                     oscillator.start(audioContext.currentTime);
                     oscillator.stop(audioContext.currentTime + 0.3);
                 }
