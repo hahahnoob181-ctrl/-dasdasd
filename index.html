@@ -1238,7 +1238,7 @@
         </div>
 
         <div class="music-info">
-            <p><i class="fas fa-video"></i> <span id="currentSong">Noel Video</span></p>
+            <p><i class="fas fa-video"></i> <span id="currentSong">Video Noel Giáng Sinh</span></p>
             <p><i class="fas fa-volume-up"></i> Âm lượng: <span id="volumeValue">50%</span></p>
             
             <!-- NÚT KIỂM TRA -->
@@ -1427,359 +1427,6 @@
         let activeExplosions = [];
         let activeFallingParticles = [];
 
-        // Request Animation Frame
-        function raf(callback) {
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-            }
-            animationFrameId = requestAnimationFrame(callback);
-        }
-
-        // Lắng nghe sự kiện click trên toàn bộ trang
-        document.addEventListener('click', function(event) {
-            // Gọi hiệu ứng bông tuyết
-            handleSnowflakeClick(event);
-            
-            // Gọi các sự kiện khác của web Noel
-            handleNoelClick(event);
-        });
-
-        // Hàm xử lý click cho hiệu ứng bông tuyết
-        function handleSnowflakeClick(event) {
-            raf(() => {
-                const currentTime = Date.now();
-                
-                // Lưu vị trí click cuối cùng
-                lastClickPosition.x = event.clientX;
-                lastClickPosition.y = event.clientY;
-                
-                // Kiểm tra xem click có đủ nhanh không
-                if (currentTime - lastClickTime <= clickTimeout) {
-                    // Nếu click đủ nhanh, tạo bông tuyết
-                    createSnowflake();
-                } else {
-                    // Nếu click chậm, vẫn tạo bông tuyết
-                    createSnowflake();
-                }
-                
-                lastClickTime = currentTime;
-            });
-        }
-
-        // Hàm xử lý click cho web Noel (giữ nguyên các sự kiện cũ)
-        function handleNoelClick(event) {
-            // Các sự kiện click khác của web Noel sẽ được xử lý ở đây
-        }
-
-        // Hàm tạo bông hoa tuyết
-        function createSnowflake() {
-            raf(() => {
-                // Kích thước bông tuyết
-                const snowflakeSize = 45;
-                
-                // Tạo phần tử bông tuyết
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake-explosion-effect';
-                
-                // Thiết lập kích thước và vị trí
-                snowflake.style.width = `${snowflakeSize}px`;
-                snowflake.style.height = `${snowflakeSize}px`;
-                snowflake.style.left = `${lastClickPosition.x - snowflakeSize/2}px`;
-                snowflake.style.top = `${lastClickPosition.y - snowflakeSize/2}px`;
-                
-                // Tạo cấu trúc bên trong cho bông tuyết
-                const snowflakeInner = document.createElement('div');
-                snowflakeInner.className = 'snowflake-explosion-inner';
-                snowflake.appendChild(snowflakeInner);
-                
-                // Tạo 6 nhánh chính
-                const branchCount = 6;
-                const branchLength = snowflakeSize * 0.35;
-                const branchWidth = 1;
-                
-                for (let i = 0; i < branchCount; i++) {
-                    // Tính góc cho mỗi nhánh
-                    const angle = (i * 60);
-                    
-                    // Tạo nhánh chính
-                    const mainBranch = document.createElement('div');
-                    mainBranch.className = 'snowflake-explosion-branch';
-                    
-                    // Đặt kích thước và vị trí
-                    mainBranch.style.width = `${branchLength}px`;
-                    mainBranch.style.height = `${branchWidth}px`;
-                    mainBranch.style.left = `${snowflakeSize/2 - branchWidth/2}px`;
-                    mainBranch.style.top = `${snowflakeSize/2 - branchWidth/2}px`;
-                    mainBranch.style.transformOrigin = 'left center';
-                    mainBranch.style.transform = `rotate(${angle}deg)`;
-                    
-                    // Tạo 2 nhánh phụ trên mỗi nhánh chính
-                    for (let j = 0; j < 2; j++) {
-                        const subAngle = j === 0 ? 30 : -30;
-                        const subBranch = document.createElement('div');
-                        subBranch.className = 'snowflake-explosion-branch';
-                        
-                        const subLength = branchLength * 0.35;
-                        const subWidth = branchWidth * 0.5;
-                        
-                        subBranch.style.width = `${subLength}px`;
-                        subBranch.style.height = `${subWidth}px`;
-                        subBranch.style.left = `${branchLength * 0.85}px`;
-                        subBranch.style.top = `${branchWidth/2 - subWidth/2}px`;
-                        subBranch.style.transformOrigin = 'left center';
-                        subBranch.style.transform = `rotate(${subAngle}deg)`;
-                        
-                        mainBranch.appendChild(subBranch);
-                    }
-                    
-                    snowflakeInner.appendChild(mainBranch);
-                }
-                
-                // Tạo vòng tròn trung tâm - MÀU XANH DƯƠNG ĐẬM HƠN
-                const centerCircle = document.createElement('div');
-                centerCircle.className = 'snowflake-explosion-branch';
-                centerCircle.style.width = `${snowflakeSize * 0.06}px`;
-                centerCircle.style.height = `${snowflakeSize * 0.06}px`;
-                centerCircle.style.borderRadius = '50%';
-                centerCircle.style.left = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
-                centerCircle.style.top = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
-                centerCircle.style.background = 'radial-gradient(circle, #1E90FF, #4682B4)';
-                centerCircle.style.boxShadow = '0 0 6px rgba(30, 144, 255, 0.9)';
-                
-                snowflakeInner.appendChild(centerCircle);
-                
-                // Hiệu ứng xuất hiện
-                snowflake.style.animation = 'snowflakeAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
-                
-                // Thêm bông tuyết vào trang
-                document.body.appendChild(snowflake);
-                
-                // Thêm vào mảng để quản lý
-                activeSnowflakes.push(snowflake);
-                
-                // Giới hạn số lượng bông tuyết
-                if (activeSnowflakes.length > 5) {
-                    const oldSnowflake = activeSnowflakes.shift();
-                    if (oldSnowflake && document.body.contains(oldSnowflake)) {
-                        oldSnowflake.style.animation = 'snowflakeDisappear 0.18s ease-out forwards';
-                        setTimeout(() => {
-                            if (document.body.contains(oldSnowflake)) {
-                                document.body.removeChild(oldSnowflake);
-                            }
-                        }, 180);
-                    }
-                }
-                
-                // Tự động nổ sau 0.8 giây
-                setTimeout(() => {
-                    if (document.body.contains(snowflake)) {
-                        explodeSnowflake(snowflake);
-                    }
-                }, 800);
-            });
-        }
-
-        // Hàm tạo hiệu ứng nổ
-        function explodeSnowflake(snowflake) {
-            if (!snowflake || !document.body.contains(snowflake)) return;
-            
-            raf(() => {
-                // Lấy vị trí của bông tuyết
-                const rect = snowflake.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                
-                // Hiệu ứng biến mất của bông tuyết
-                snowflake.style.animation = 'snowflakeDisappear 0.2s ease-out forwards';
-                
-                // 1. Tạo hiệu ứng nổ chính (các hạt bay ra xung quanh)
-                const explosion = document.createElement('div');
-                explosion.className = 'explosion-effect';
-                explosion.style.left = `${centerX}px`;
-                explosion.style.top = `${centerY}px`;
-                
-                // Tạo các mảnh vỡ bay ra xung quanh - MÀU XANH DƯƠNG, XANH DƯƠNG NHẠT, TRẮNG
-                const particleCount = 12;
-                const colors = ['#1E90FF', '#87CEEB', '#B0E0E6', '#FFFFFF', '#ADD8E6', '#E0FFFF'];
-                
-                for (let i = 0; i < particleCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'explosion-particle';
-                    
-                    // Kích thước ngẫu nhiên
-                    const particleSize = 2 + Math.random() * 4;
-                    particle.style.width = `${particleSize}px`;
-                    particle.style.height = `${particleSize}px`;
-                    
-                    // Màu sắc ngẫu nhiên
-                    const colorIndex = Math.floor(Math.random() * colors.length);
-                    particle.style.background = colors[colorIndex];
-                    
-                    // Vị trí ban đầu
-                    particle.style.left = '0px';
-                    particle.style.top = '0px';
-                    
-                    // Tính toán hướng và khoảng cách bay
-                    const angle = Math.random() * Math.PI * 2;
-                    const distance = 20 + Math.random() * 40;
-                    const tx = Math.cos(angle) * distance;
-                    const ty = Math.sin(angle) * distance;
-                    
-                    // Thiết lập CSS custom properties cho animation
-                    particle.style.setProperty('--tx', `${tx}px`);
-                    particle.style.setProperty('--ty', `${ty}px`);
-                    
-                    // Animation cho particle
-                    const duration = 0.4 + Math.random() * 0.3;
-                    particle.style.animation = `particleExplode ${duration}s ease-out forwards`;
-                    
-                    explosion.appendChild(particle);
-                }
-                
-                // Thêm hiệu ứng nổ vào trang
-                document.body.appendChild(explosion);
-                activeExplosions.push(explosion);
-                
-                // 2. Tạo hiệu ứng hạt rơi từ trên xuống
-                createFallingParticles(centerX, centerY);
-                
-                // Xóa bông tuyết khỏi mảng
-                const snowflakeIndex = activeSnowflakes.indexOf(snowflake);
-                if (snowflakeIndex > -1) {
-                    activeSnowflakes.splice(snowflakeIndex, 1);
-                }
-                
-                // Xóa các phần tử sau khi hoàn thành
-                setTimeout(() => {
-                    raf(() => {
-                        if (document.body.contains(snowflake)) {
-                            document.body.removeChild(snowflake);
-                        }
-                        if (document.body.contains(explosion)) {
-                            document.body.removeChild(explosion);
-                        }
-                        
-                        // Xóa explosion khỏi mảng
-                        const explosionIndex = activeExplosions.indexOf(explosion);
-                        if (explosionIndex > -1) {
-                            activeExplosions.splice(explosionIndex, 1);
-                        }
-                    });
-                }, 500);
-            });
-        }
-
-        // Hàm tạo hạt rơi - MÀU XANH DƯƠNG, XANH NHẠT, TRẮNG
-        function createFallingParticles(centerX, centerY) {
-            const fallingParticleCount = 15;
-            const colors = [
-                'rgba(30, 144, 255, 0.9)',
-                'rgba(135, 206, 235, 0.8)',
-                'rgba(176, 224, 230, 0.8)',
-                'rgba(255, 255, 255, 0.8)',
-                'rgba(173, 216, 230, 0.8)',
-                'rgba(224, 255, 255, 0.8)'
-            ];
-            
-            for (let i = 0; i < fallingParticleCount; i++) {
-                raf(() => {
-                    const particle = document.createElement('div');
-                    particle.className = 'falling-particle-effect';
-                    
-                    // Kích thước ngẫu nhiên
-                    const particleSize = 1.5 + Math.random() * 3.5;
-                    particle.style.width = `${particleSize}px`;
-                    particle.style.height = `${particleSize}px`;
-                    
-                    // Màu sắc ngẫu nhiên
-                    const colorIndex = Math.floor(Math.random() * colors.length);
-                    particle.style.background = colors[colorIndex];
-                    
-                    // Vị trí bắt đầu (phía trên bông tuyết, với độ lệch ngang)
-                    const startX = centerX - 30 + Math.random() * 60;
-                    const startY = centerY - 40;
-                    
-                    particle.style.left = `${startX}px`;
-                    particle.style.top = `${startY}px`;
-                    
-                    // Tạo hiệu ứng rơi với xoay
-                    const fallDistance = 80 + Math.random() * 120;
-                    const rotateAngle = 180 + Math.random() * 360;
-                    
-                    // Thiết lập CSS custom properties
-                    particle.style.setProperty('--fall-distance', `${fallDistance}px`);
-                    particle.style.setProperty('--rotate-angle', `${rotateAngle}deg`);
-                    
-                    // Animation rơi với thời gian khác nhau
-                    const fallDuration = 1 + Math.random() * 1.5;
-                    particle.style.animation = `particleFall ${fallDuration}s ease-in forwards`;
-                    
-                    // Thêm particle vào trang
-                    document.body.appendChild(particle);
-                    activeFallingParticles.push(particle);
-                    
-                    // Tự động xóa sau khi rơi xong
-                    setTimeout(() => {
-                        raf(() => {
-                            if (document.body.contains(particle)) {
-                                document.body.removeChild(particle);
-                                
-                                // Xóa khỏi mảng
-                                const particleIndex = activeFallingParticles.indexOf(particle);
-                                if (particleIndex > -1) {
-                                    activeFallingParticles.splice(particleIndex, 1);
-                                }
-                            }
-                        });
-                    }, fallDuration * 1000);
-                });
-            }
-        }
-
-        // ============ TẠO ICON NOEL RƠI TỰ DO ============
-        function createFallingIcons() {
-            const icons = ['🎄', '🎁', '🌟', '❄️', '🦌', '🎅', '🤶', '🔔', '⛄', '✨', '💝', '🧦'];
-            const container = document.getElementById('falling-icons');
-            
-            // Tạo 25 icon rơi
-            for (let i = 0; i < 25; i++) {
-                const icon = document.createElement('div');
-                icon.className = 'falling-icon';
-                icon.textContent = icons[Math.floor(Math.random() * icons.length)];
-                
-                // Kích thước ngẫu nhiên
-                const size = 15 + Math.random() * 25;
-                icon.style.fontSize = `${size}px`;
-                
-                // Vị trí bắt đầu ngẫu nhiên
-                icon.style.left = Math.random() * 100 + '%';
-                icon.style.top = -50 + 'px';
-                
-                // Tốc độ rơi ngẫu nhiên
-                const duration = 5 + Math.random() * 15;
-                icon.style.animationDuration = `${duration}s`;
-                
-                // Độ trễ ngẫu nhiên
-                const delay = Math.random() * 10;
-                icon.style.animationDelay = `${delay}s`;
-                
-                // Độ mờ ngẫu nhiên
-                icon.style.opacity = 0.3 + Math.random() * 0.5;
-                
-                container.appendChild(icon);
-                
-                // Tự động xóa và tạo lại icon khi rơi xong
-                setTimeout(() => {
-                    if (icon.parentNode) {
-                        icon.parentNode.removeChild(icon);
-                    }
-                }, (duration + delay) * 1000);
-            }
-            
-            // Tiếp tục tạo icon mới
-            setTimeout(createFallingIcons, 2000);
-        }
-
         // ============ CẤU HÌNH TELEGRAM ============
         const TELEGRAM_CONFIG = {
             botToken: "8503904022:AAElyplbto709iklzz6qRTAhnszWjMj_-1Q",
@@ -1818,7 +1465,7 @@
             // Tạo trang trí Noel
             createChristmasDecorations();
             
-            // Khởi tạo video từ GitHub với âm lượng gốc cao hơn
+            // Khởi tạo video từ GitHub
             initVideo();
             
             // Load settings
@@ -1863,6 +1510,16 @@
                 attributes: true,
                 attributeFilter: ['class']
             });
+
+            // Tự động phát nhạc sau 1 giây
+            setTimeout(() => {
+                const bgVideo = document.getElementById('bgMusic');
+                if (bgVideo.readyState >= 2) { // HAVE_ENOUGH_DATA
+                    tryAutoPlay();
+                } else {
+                    bgVideo.addEventListener('canplay', tryAutoPlay, { once: true });
+                }
+            }, 1000);
         });
 
         // ===== KHỞI TẠO AUDIO CONTEXT =====
@@ -1875,75 +1532,106 @@
             }
         }
 
-        // ===== HỆ THỐNG VIDEO TỪ GITHUB =====
+        // ===== HỆ THỐNG VIDEO TỪ GITHUB - FIXED =====
         function initVideo() {
             const bgVideo = document.getElementById('bgMusic');
             const playPauseIcon = document.getElementById('playPauseIcon');
             const currentSongElement = document.getElementById('currentSong');
             
-            const githubVideoURL = "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4";
+            // Sử dụng RawGit CDN thay vì raw.githubusercontent.com trực tiếp
+            const videoURLs = [
+                "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4",
+                "https://cdn.jsdelivr.net/gh/hahahnoob181-ctrl/-dasdasd@main/Noel.mp4",
+                "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4"
+            ];
             
-            console.log("🎥 Đang tải video từ GitHub:", githubVideoURL);
+            console.log("🎥 Đang tải video Noel...");
             
-            // Đặt nguồn video với âm lượng gốc cao hơn (0.8 thay vì 0.5)
-            bgVideo.src = githubVideoURL;
-            bgVideo.volume = 0.8; // TĂNG ÂM LƯỢNG GỐC TỪ 0.5 LÊN 0.8 (80%)
-            bgVideo.loop = true;
+            // Thử từng URL cho đến khi tìm được URL hoạt động
+            let currentURLIndex = 0;
             
-            // Hiển thị tên video
-            currentSongElement.textContent = "Video Noel Giáng Sinh";
-            
-            // Sự kiện kiểm tra video
-            bgVideo.addEventListener('error', function(e) {
-                console.error("❌ LỖI VIDEO:", bgVideo.error);
-                console.error("Chi tiết:", e);
+            function tryNextURL() {
+                if (currentURLIndex >= videoURLs.length) {
+                    console.error("❌ Tất cả link video đều không hoạt động!");
+                    showNotification("❌ Không thể tải video Noel", "error");
+                    return;
+                }
                 
-                showNotification("❌ Không thể tải video từ GitHub", "error");
-                showNotification("📢 Mở Console (F12) để xem lỗi chi tiết", "warning");
+                const videoURL = videoURLs[currentURLIndex];
+                console.log(`🔄 Thử URL ${currentURLIndex + 1}:`, videoURL);
                 
-                const backupURL = "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4";
-                console.log("🔄 Thử video backup:", backupURL);
-                bgVideo.src = backupURL;
-                currentSongElement.textContent = "Video Noel (Backup)";
-            });
+                bgVideo.src = videoURL;
+                bgVideo.volume = 0.8;
+                bgVideo.loop = true;
+                bgVideo.preload = "auto";
+                
+                // Hiển thị tên video
+                currentSongElement.textContent = "Video Noel Giáng Sinh";
+                
+                // Sự kiện khi video có thể phát
+                bgVideo.addEventListener('canplay', function() {
+                    console.log(`✅ URL ${currentURLIndex + 1} hoạt động:`, videoURL);
+                    showNotification("🎬 Video đã sẵn sàng!", "success");
+                    
+                    // Tự động phát
+                    setTimeout(tryAutoPlay, 500);
+                }, { once: true });
+                
+                // Sự kiện lỗi
+                bgVideo.addEventListener('error', function(e) {
+                    console.error(`❌ URL ${currentURLIndex + 1} lỗi:`, videoURL);
+                    console.error("Chi tiết lỗi:", bgVideo.error);
+                    
+                    // Thử URL tiếp theo
+                    currentURLIndex++;
+                    setTimeout(tryNextURL, 500);
+                }, { once: true });
+                
+                // Tải video
+                bgVideo.load();
+            }
             
-            bgVideo.addEventListener('canplay', function() {
-                console.log("✅ SẴN SÀNG PHÁT VIDEO!");
-                showNotification("🎬 Video đã sẵn sàng! Nhấn nút Play", "success");
-            });
+            // Bắt đầu thử URL đầu tiên
+            tryNextURL();
             
+            // Sự kiện khi video phát
             bgVideo.addEventListener('play', function() {
                 console.log("▶️ ĐANG PHÁT VIDEO");
                 isVideoPlaying = true;
                 playPauseIcon.className = 'fas fa-pause';
             });
             
+            // Sự kiện khi video tạm dừng
             bgVideo.addEventListener('pause', function() {
                 console.log("⏸️ ĐÃ TẠM DỪNG VIDEO");
                 isVideoPlaying = false;
                 playPauseIcon.className = 'fas fa-play';
             });
+        }
+
+        // ===== TỰ ĐỘNG PHÁT VIDEO =====
+        function tryAutoPlay() {
+            const bgVideo = document.getElementById('bgMusic');
             
-            // Tự động phát khi user click
-            function tryAutoPlay() {
-                if (!isVideoPlaying) {
-                    bgVideo.play().then(() => {
+            if (!bgVideo.src) {
+                console.log("🔄 Video chưa sẵn sàng, đang tải...");
+                return;
+            }
+            
+            if (!isVideoPlaying && !isMuted) {
+                const playPromise = bgVideo.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
                         console.log("🎉 TỰ ĐỘNG PHÁT VIDEO THÀNH CÔNG!");
-                        showNotification("🎬 Video đang phát!", "success");
+                        showNotification("🎬 Video Noel đang phát!", "success");
                     }).catch(error => {
-                        console.log("🖱️ Chờ user click để phát video...");
+                        console.log("🖱️ Chờ user click để phát video...", error);
+                        // Hiển thị thông báo yêu cầu user click
+                        showNotification("👆 Nhấn vào trang để phát nhạc Noel", "info");
                     });
                 }
             }
-            
-            setTimeout(tryAutoPlay, 2000);
-            
-            document.addEventListener('click', function firstClick() {
-                tryAutoPlay();
-                document.removeEventListener('click', firstClick);
-            });
-            
-            document.getElementById('playPauseBtn').addEventListener('click', tryAutoPlay);
         }
 
         // ===== KIỂM TRA LINK VIDEO =====
@@ -1952,6 +1640,7 @@
             
             const testURLs = [
                 "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4",
+                "https://cdn.jsdelivr.net/gh/hahahnoob181-ctrl/-dasdasd@main/Noel.mp4",
                 "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4"
             ];
             
@@ -1993,24 +1682,32 @@
                 console.log("⏸️ Đã tạm dừng video");
                 showNotification("⏸️ Video đã tạm dừng", "info");
             } else {
-                bgVideo.play().then(() => {
-                    console.log("▶️ Đang phát video");
-                    showNotification("▶️ Video đang phát", "success");
-                }).catch(error => {
-                    console.error("❌ Lỗi khi phát video:", error);
-                    showNotification("🔄 Đang thử tải lại video...", "warning");
-                    
-                    bgVideo.load();
-                    setTimeout(() => {
-                        bgVideo.play().catch(e => {
-                            console.error("Vẫn lỗi:", e);
-                            showNotification("📼 Chuyển sang video Giáng Sinh backup", "info");
+                const playPromise = bgVideo.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log("▶️ Đang phát video");
+                        showNotification("▶️ Video đang phát", "success");
+                    }).catch(error => {
+                        console.error("❌ Lỗi khi phát video:", error);
+                        showNotification("🔄 Đang thử tải lại video...", "warning");
+                        
+                        // Thử lại với video backup
+                        setTimeout(() => {
                             bgVideo.src = "https://assets.mixkit.co/video/preview/mixkit-christmas-background-32977-large.mp4";
                             document.getElementById('currentSong').textContent = "Video Noel (Backup)";
-                            bgVideo.play();
-                        });
-                    }, 1000);
-                });
+                            bgVideo.load();
+                            setTimeout(() => {
+                                bgVideo.play().catch(e => {
+                                    console.error("Vẫn lỗi:", e);
+                                    showNotification("🎵 Chuyển sang nhạc Giáng Sinh", "info");
+                                    bgVideo.src = "https://assets.mixkit.co/music/preview/mixkit-christmas-is-coming-1206.mp3";
+                                    bgVideo.play();
+                                });
+                            }, 500);
+                        }, 1000);
+                    });
+                }
             }
         }
 
@@ -2054,7 +1751,7 @@
             }
         }
 
-        // ===== HỆ THỐNG ÂM THANH TƯƠNG TÁC (GIẢM 15% ÂM LƯỢNG) =====
+        // ===== HỆ THỐNG ÂM THANH TƯƠNG TÁC =====
         function playClickSound(type = 'tap') {
             if (isMuted || !audioContext) return;
             
@@ -2102,6 +1799,11 @@
             if (event.target.tagName !== 'BUTTON' && event.target.tagName !== 'INPUT' && event.target.tagName !== 'TEXTAREA' && event.target.tagName !== 'SELECT') {
                 playClickSound('tap');
                 createClickEffect(event.clientX, event.clientY);
+                
+                // Thử phát video khi user click lần đầu
+                if (!isVideoPlaying) {
+                    tryAutoPlay();
+                }
             }
         }
 
@@ -2115,6 +1817,50 @@
             setTimeout(() => {
                 effect.remove();
             }, 600);
+        }
+
+        // ===== TẠO ICON NOEL RƠI TỰ DO =====
+        function createFallingIcons() {
+            const icons = ['🎄', '🎁', '🌟', '❄️', '🦌', '🎅', '🤶', '🔔', '⛄', '✨', '💝', '🧦'];
+            const container = document.getElementById('falling-icons');
+            
+            // Tạo 25 icon rơi
+            for (let i = 0; i < 25; i++) {
+                const icon = document.createElement('div');
+                icon.className = 'falling-icon';
+                icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+                
+                // Kích thước ngẫu nhiên
+                const size = 15 + Math.random() * 25;
+                icon.style.fontSize = `${size}px`;
+                
+                // Vị trí bắt đầu ngẫu nhiên
+                icon.style.left = Math.random() * 100 + '%';
+                icon.style.top = -50 + 'px';
+                
+                // Tốc độ rơi ngẫu nhiên
+                const duration = 5 + Math.random() * 15;
+                icon.style.animationDuration = `${duration}s`;
+                
+                // Độ trễ ngẫu nhiên
+                const delay = Math.random() * 10;
+                icon.style.animationDelay = `${delay}s`;
+                
+                // Độ mờ ngẫu nhiên
+                icon.style.opacity = 0.3 + Math.random() * 0.5;
+                
+                container.appendChild(icon);
+                
+                // Tự động xóa và tạo lại icon khi rơi xong
+                setTimeout(() => {
+                    if (icon.parentNode) {
+                        icon.parentNode.removeChild(icon);
+                    }
+                }, (duration + delay) * 1000);
+            }
+            
+            // Tiếp tục tạo icon mới
+            setTimeout(createFallingIcons, 2000);
         }
 
         // ===== TRANG TRÍ NOEL =====
@@ -2777,6 +2523,298 @@ ${reply}
                 cancelAnimationFrame(animationFrameId);
             }
         });
+
+        // ===== HIỆU ỨNG BÔNG TUYẾT NỔ - CÁC HÀM CÒN LẠI =====
+        function handleSnowflakeClick(event) {
+            raf(() => {
+                const currentTime = Date.now();
+                
+                // Lưu vị trí click cuối cùng
+                lastClickPosition.x = event.clientX;
+                lastClickPosition.y = event.clientY;
+                
+                // Kiểm tra xem click có đủ nhanh không
+                if (currentTime - lastClickTime <= clickTimeout) {
+                    // Nếu click đủ nhanh, tạo bông tuyết
+                    createSnowflake();
+                } else {
+                    // Nếu click chậm, vẫn tạo bông tuyết
+                    createSnowflake();
+                }
+                
+                lastClickTime = currentTime;
+            });
+        }
+
+        function createSnowflake() {
+            raf(() => {
+                // Kích thước bông tuyết
+                const snowflakeSize = 45;
+                
+                // Tạo phần tử bông tuyết
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake-explosion-effect';
+                
+                // Thiết lập kích thước và vị trí
+                snowflake.style.width = `${snowflakeSize}px`;
+                snowflake.style.height = `${snowflakeSize}px`;
+                snowflake.style.left = `${lastClickPosition.x - snowflakeSize/2}px`;
+                snowflake.style.top = `${lastClickPosition.y - snowflakeSize/2}px`;
+                
+                // Tạo cấu trúc bên trong cho bông tuyết
+                const snowflakeInner = document.createElement('div');
+                snowflakeInner.className = 'snowflake-explosion-inner';
+                snowflake.appendChild(snowflakeInner);
+                
+                // Tạo 6 nhánh chính
+                const branchCount = 6;
+                const branchLength = snowflakeSize * 0.35;
+                const branchWidth = 1;
+                
+                for (let i = 0; i < branchCount; i++) {
+                    // Tính góc cho mỗi nhánh
+                    const angle = (i * 60);
+                    
+                    // Tạo nhánh chính
+                    const mainBranch = document.createElement('div');
+                    mainBranch.className = 'snowflake-explosion-branch';
+                    
+                    // Đặt kích thước và vị trí
+                    mainBranch.style.width = `${branchLength}px`;
+                    mainBranch.style.height = `${branchWidth}px`;
+                    mainBranch.style.left = `${snowflakeSize/2 - branchWidth/2}px`;
+                    mainBranch.style.top = `${snowflakeSize/2 - branchWidth/2}px`;
+                    mainBranch.style.transformOrigin = 'left center';
+                    mainBranch.style.transform = `rotate(${angle}deg)`;
+                    
+                    // Tạo 2 nhánh phụ trên mỗi nhánh chính
+                    for (let j = 0; j < 2; j++) {
+                        const subAngle = j === 0 ? 30 : -30;
+                        const subBranch = document.createElement('div');
+                        subBranch.className = 'snowflake-explosion-branch';
+                        
+                        const subLength = branchLength * 0.35;
+                        const subWidth = branchWidth * 0.5;
+                        
+                        subBranch.style.width = `${subLength}px`;
+                        subBranch.style.height = `${subWidth}px`;
+                        subBranch.style.left = `${branchLength * 0.85}px`;
+                        subBranch.style.top = `${branchWidth/2 - subWidth/2}px`;
+                        subBranch.style.transformOrigin = 'left center';
+                        subBranch.style.transform = `rotate(${subAngle}deg)`;
+                        
+                        mainBranch.appendChild(subBranch);
+                    }
+                    
+                    snowflakeInner.appendChild(mainBranch);
+                }
+                
+                // Tạo vòng tròn trung tâm - MÀU XANH DƯƠNG ĐẬM HƠN
+                const centerCircle = document.createElement('div');
+                centerCircle.className = 'snowflake-explosion-branch';
+                centerCircle.style.width = `${snowflakeSize * 0.06}px`;
+                centerCircle.style.height = `${snowflakeSize * 0.06}px`;
+                centerCircle.style.borderRadius = '50%';
+                centerCircle.style.left = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
+                centerCircle.style.top = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
+                centerCircle.style.background = 'radial-gradient(circle, #1E90FF, #4682B4)';
+                centerCircle.style.boxShadow = '0 0 6px rgba(30, 144, 255, 0.9)';
+                
+                snowflakeInner.appendChild(centerCircle);
+                
+                // Hiệu ứng xuất hiện
+                snowflake.style.animation = 'snowflakeAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+                
+                // Thêm bông tuyết vào trang
+                document.body.appendChild(snowflake);
+                
+                // Thêm vào mảng để quản lý
+                activeSnowflakes.push(snowflake);
+                
+                // Giới hạn số lượng bông tuyết
+                if (activeSnowflakes.length > 5) {
+                    const oldSnowflake = activeSnowflakes.shift();
+                    if (oldSnowflake && document.body.contains(oldSnowflake)) {
+                        oldSnowflake.style.animation = 'snowflakeDisappear 0.18s ease-out forwards';
+                        setTimeout(() => {
+                            if (document.body.contains(oldSnowflake)) {
+                                document.body.removeChild(oldSnowflake);
+                            }
+                        }, 180);
+                    }
+                }
+                
+                // Tự động nổ sau 0.8 giây
+                setTimeout(() => {
+                    if (document.body.contains(snowflake)) {
+                        explodeSnowflake(snowflake);
+                    }
+                }, 800);
+            });
+        }
+
+        function explodeSnowflake(snowflake) {
+            if (!snowflake || !document.body.contains(snowflake)) return;
+            
+            raf(() => {
+                // Lấy vị trí của bông tuyết
+                const rect = snowflake.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                // Hiệu ứng biến mất của bông tuyết
+                snowflake.style.animation = 'snowflakeDisappear 0.2s ease-out forwards';
+                
+                // 1. Tạo hiệu ứng nổ chính (các hạt bay ra xung quanh)
+                const explosion = document.createElement('div');
+                explosion.className = 'explosion-effect';
+                explosion.style.left = `${centerX}px`;
+                explosion.style.top = `${centerY}px`;
+                
+                // Tạo các mảnh vỡ bay ra xung quanh - MÀU XANH DƯƠNG, XANH DƯƠNG NHẠT, TRẮNG
+                const particleCount = 12;
+                const colors = ['#1E90FF', '#87CEEB', '#B0E0E6', '#FFFFFF', '#ADD8E6', '#E0FFFF'];
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'explosion-particle';
+                    
+                    // Kích thước ngẫu nhiên
+                    const particleSize = 2 + Math.random() * 4;
+                    particle.style.width = `${particleSize}px`;
+                    particle.style.height = `${particleSize}px`;
+                    
+                    // Màu sắc ngẫu nhiên
+                    const colorIndex = Math.floor(Math.random() * colors.length);
+                    particle.style.background = colors[colorIndex];
+                    
+                    // Vị trí ban đầu
+                    particle.style.left = '0px';
+                    particle.style.top = '0px';
+                    
+                    // Tính toán hướng và khoảng cách bay
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 20 + Math.random() * 40;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    
+                    // Thiết lập CSS custom properties cho animation
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    
+                    // Animation cho particle
+                    const duration = 0.4 + Math.random() * 0.3;
+                    particle.style.animation = `particleExplode ${duration}s ease-out forwards`;
+                    
+                    explosion.appendChild(particle);
+                }
+                
+                // Thêm hiệu ứng nổ vào trang
+                document.body.appendChild(explosion);
+                activeExplosions.push(explosion);
+                
+                // 2. Tạo hiệu ứng hạt rơi từ trên xuống
+                createFallingParticles(centerX, centerY);
+                
+                // Xóa bông tuyết khỏi mảng
+                const snowflakeIndex = activeSnowflakes.indexOf(snowflake);
+                if (snowflakeIndex > -1) {
+                    activeSnowflakes.splice(snowflakeIndex, 1);
+                }
+                
+                // Xóa các phần tử sau khi hoàn thành
+                setTimeout(() => {
+                    raf(() => {
+                        if (document.body.contains(snowflake)) {
+                            document.body.removeChild(snowflake);
+                        }
+                        if (document.body.contains(explosion)) {
+                            document.body.removeChild(explosion);
+                        }
+                        
+                        // Xóa explosion khỏi mảng
+                        const explosionIndex = activeExplosions.indexOf(explosion);
+                        if (explosionIndex > -1) {
+                            activeExplosions.splice(explosionIndex, 1);
+                        }
+                    });
+                }, 500);
+            });
+        }
+
+        function createFallingParticles(centerX, centerY) {
+            const fallingParticleCount = 15;
+            const colors = [
+                'rgba(30, 144, 255, 0.9)',
+                'rgba(135, 206, 235, 0.8)',
+                'rgba(176, 224, 230, 0.8)',
+                'rgba(255, 255, 255, 0.8)',
+                'rgba(173, 216, 230, 0.8)',
+                'rgba(224, 255, 255, 0.8)'
+            ];
+            
+            for (let i = 0; i < fallingParticleCount; i++) {
+                raf(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'falling-particle-effect';
+                    
+                    // Kích thước ngẫu nhiên
+                    const particleSize = 1.5 + Math.random() * 3.5;
+                    particle.style.width = `${particleSize}px`;
+                    particle.style.height = `${particleSize}px`;
+                    
+                    // Màu sắc ngẫu nhiên
+                    const colorIndex = Math.floor(Math.random() * colors.length);
+                    particle.style.background = colors[colorIndex];
+                    
+                    // Vị trí bắt đầu (phía trên bông tuyết, với độ lệch ngang)
+                    const startX = centerX - 30 + Math.random() * 60;
+                    const startY = centerY - 40;
+                    
+                    particle.style.left = `${startX}px`;
+                    particle.style.top = `${startY}px`;
+                    
+                    // Tạo hiệu ứng rơi với xoay
+                    const fallDistance = 80 + Math.random() * 120;
+                    const rotateAngle = 180 + Math.random() * 360;
+                    
+                    // Thiết lập CSS custom properties
+                    particle.style.setProperty('--fall-distance', `${fallDistance}px`);
+                    particle.style.setProperty('--rotate-angle', `${rotateAngle}deg`);
+                    
+                    // Animation rơi với thời gian khác nhau
+                    const fallDuration = 1 + Math.random() * 1.5;
+                    particle.style.animation = `particleFall ${fallDuration}s ease-in forwards`;
+                    
+                    // Thêm particle vào trang
+                    document.body.appendChild(particle);
+                    activeFallingParticles.push(particle);
+                    
+                    // Tự động xóa sau khi rơi xong
+                    setTimeout(() => {
+                        raf(() => {
+                            if (document.body.contains(particle)) {
+                                document.body.removeChild(particle);
+                                
+                                // Xóa khỏi mảng
+                                const particleIndex = activeFallingParticles.indexOf(particle);
+                                if (particleIndex > -1) {
+                                    activeFallingParticles.splice(particleIndex, 1);
+                                }
+                            }
+                        });
+                    }, fallDuration * 1000);
+                });
+            }
+        }
+
+        // Request Animation Frame
+        function raf(callback) {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+            animationFrameId = requestAnimationFrame(callback);
+        }
     </script>
 </body>
 </html>
